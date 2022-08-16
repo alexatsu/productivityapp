@@ -1,3 +1,5 @@
+@use './another.scss' as a;
+
 .app {
   height: 700px;
   width: 800px;
@@ -5,7 +7,7 @@
   border-radius: 15px;
 
   .nav {
-    color: rgb(42, 42, 255);
+    color: a.$Lblue;
     font-size: 2rem;
   }
 }
