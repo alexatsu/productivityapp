@@ -2,7 +2,8 @@
 import HelloWorld from './components/HelloWorld.vue'
 import { ref } from 'vue'
 
-let stopTimer;
+let timerRunning;
+let btnToggle = ref('Start');
 const seconds = ref(0);
 const display = ref("00 : 00");
 
@@ -13,33 +14,36 @@ function formatCode(secs) {
           : ${currentSeconds < 10 ? "0" + currentSeconds : currentSeconds}`;
 }
 function countdown() {
+  clearInterval(timerRunning); // prevent timer from looping with a delay
+  timerRunning = setInterval(() => {
     if (seconds.value > 0) {
-      stopTimer = setInterval(() => {
-        seconds.value--;
-        display.value = formatCode(seconds.value);
-      }, 1000)
-    } 
+      seconds.value--;
+      display.value = formatCode(seconds.value);
+    } else {
+      reset();
+    }
+  }, 1000)
 }
-function stopCountdown() {
-  clearInterval(stopTimer);
+function pauseCountdown() {
+  clearInterval(timerRunning);
 }
 function reset() {
   seconds.value = 0;
   display.value = ("00 : 00");
-  clearInterval(stopTimer);
+  clearInterval(timerRunning);
+}
+function addSeconds(secs) {
+  seconds.value += secs;
+  display.value = formatCode(seconds.value);
 }
 function addOneMinute() {
-  seconds.value += 60;
-  display.value = formatCode(seconds.value);
-  
+  addSeconds(60);
 }
 function addFiveMinutes() {
-  seconds.value += 300;
-  display.value = formatCode(seconds.value);
+  addSeconds(300);
 }
 function addTenMinutes() {
-  seconds.value += 600;
-  display.value = formatCode(seconds.value);
+  addSeconds(600);
 }
 </script>
 
@@ -53,9 +57,10 @@ function addTenMinutes() {
     <div class="app">
       <nav class="nav">LOL</nav>
       <div class="timer">
-        <button @click="countdown()" v-if="seconds > 0">Start</button>
-        <button @click="stopCountdown()">Pause</button>
-        <button @click="reset()">Reset</button>
+        <!-- <button @click="countdown()" v-if="seconds > 0">Start</button> -->
+        <button @click="countdown()" v-if="seconds > 0">{{ btnToggle }}</button>
+        <button @click="pauseCountdown()">Pause</button>
+        <button @click="reset()" v-if="seconds > 0">Reset</button>
         <div>{{ display }}</div>
         <button @click="addOneMinute" v-if="seconds < 3600">Add one minute:</button>
         <button @click="addFiveMinutes" v-if="seconds < 3360">Add five minutes:</button>
