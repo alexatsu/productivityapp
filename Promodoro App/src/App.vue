@@ -13,24 +13,28 @@ function formatCode(secs) {
   return `${currentMinutes < 10 ? "0" + currentMinutes : currentMinutes}
           : ${currentSeconds < 10 ? "0" + currentSeconds : currentSeconds}`;
 }
-function countdown() {
+function countdownStart() {
   clearInterval(timerRunning); // prevent timer from looping with a delay
-  timerRunning = setInterval(() => {
-    if (seconds.value > 0) {
-      seconds.value--;
-      display.value = formatCode(seconds.value);
-    } else {
-      reset();
-    }
-  }, 1000)
+  if (btnToggle.value === 'Start' || btnToggle.value === 'Resume') {
+    btnToggle.value = 'Pause';
+    timerRunning = setInterval(() => {
+      if (seconds.value > 0) {
+        seconds.value--;
+        display.value = formatCode(seconds.value);
+      } else {
+        countdownReset();
+      }
+    }, 1000)
+  } else if (btnToggle.value === 'Pause') {
+    btnToggle.value = 'Resume';
+    clearInterval(timerRunning);
+  }
 }
-function pauseCountdown() {
-  clearInterval(timerRunning);
-}
-function reset() {
+function countdownReset() {
   seconds.value = 0;
   display.value = ("00 : 00");
   clearInterval(timerRunning);
+  btnToggle.value = 'Start';
 }
 function addSeconds(secs) {
   seconds.value += secs;
@@ -55,12 +59,12 @@ function addTenMinutes() {
   </header>
   <main>
     <div class="app">
-      <nav class="nav">LOL</nav>
+      <nav class="nav">Promodoro
+        <ul></ul>
+      </nav>
       <div class="timer">
-        <!-- <button @click="countdown()" v-if="seconds > 0">Start</button> -->
-        <button @click="countdown()" v-if="seconds > 0">{{ btnToggle }}</button>
-        <button @click="pauseCountdown()">Pause</button>
-        <button @click="reset()" v-if="seconds > 0">Reset</button>
+        <button @click="countdownStart()" v-if="seconds > 0">{{ btnToggle }}</button>
+        <button @click="countdownReset()" v-if="seconds > 0">Reset</button>
         <div>{{ display }}</div>
         <button @click="addOneMinute" v-if="seconds < 3600">Add one minute:</button>
         <button @click="addFiveMinutes" v-if="seconds < 3360">Add five minutes:</button>
