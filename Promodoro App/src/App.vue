@@ -1,5 +1,5 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import Todo from './components/Todo.vue';
 import { ref } from 'vue'
 
 let timerRunning;
@@ -52,11 +52,6 @@ function addTenMinutes() {
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
   <main>
     <div class="app">
       <nav class="nav">Promodoro
@@ -70,10 +65,11 @@ function addTenMinutes() {
         <button @click="addFiveMinutes" v-if="seconds < 3360">Add five minutes:</button>
         <button @click="addTenMinutes" v-if="seconds < 3060">Add ten minutes:</button>
       </div>
+      <Todo/>
     </div>
   </main>
 </template>
 
 <style scoped lang="scss">
-@import "../src/App.scss";
+@use "../src/App.scss";
 </style>

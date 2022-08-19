@@ -1,4 +1,4 @@
-@use './colors.scss' as c;
+@use './utilities/colors.scss' as c;
 
 .app {
   height: 700px;
@@ -9,6 +9,6 @@
   .nav {
     color: c.$Dblue;
     font-size: 2rem;
-    background-color: aqua;
+    background-color: rgb(255, 98, 0);
   }
 }
