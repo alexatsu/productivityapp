@@ -49,6 +49,10 @@ function addFiveMinutes() {
 function addTenMinutes() {
   addSeconds(600);
 }
+function test(deadline) {
+  seconds.value = deadline;
+  display.value = formatCode(seconds.value);
+}
 </script>
 
 <template>
@@ -65,7 +69,7 @@ function addTenMinutes() {
         <button @click="addFiveMinutes" v-if="seconds < 3360">Add five minutes:</button>
         <button @click="addTenMinutes" v-if="seconds < 3060">Add ten minutes:</button>
       </div>
-      <Todo/>
+      <Todo @testEvent="test" />
     </div>
   </main>
 </template>
