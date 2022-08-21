@@ -13,6 +13,7 @@ function formatCode(secs) {
   return `${currentMinutes < 10 ? "0" + currentMinutes : currentMinutes}
           : ${currentSeconds < 10 ? "0" + currentSeconds : currentSeconds}`;
 }
+
 function countdownStart() {
   clearInterval(timerRunning); // prevent timer from looping with a delay
   if (btnToggle.value === 'Start' || btnToggle.value === 'Resume') {
@@ -30,29 +31,36 @@ function countdownStart() {
     clearInterval(timerRunning);
   }
 }
+
 function countdownReset() {
   seconds.value = 0;
   display.value = ("00 : 00");
   clearInterval(timerRunning);
   btnToggle.value = 'Start';
 }
+
 function addSeconds(secs) {
   seconds.value += secs;
   display.value = formatCode(seconds.value);
 }
+
 function addOneMinute() {
   addSeconds(60);
 }
+
 function addFiveMinutes() {
   addSeconds(300);
 }
+
 function addTenMinutes() {
   addSeconds(600);
 }
-function test(deadline) {
-  seconds.value = deadline;
+
+function todoTimeEvent(secs) {
+  seconds.value = secs;
   display.value = formatCode(seconds.value);
 }
+
 </script>
 
 <template>
@@ -69,7 +77,7 @@ function test(deadline) {
         <button @click="addFiveMinutes" v-if="seconds < 3360">Add five minutes:</button>
         <button @click="addTenMinutes" v-if="seconds < 3060">Add ten minutes:</button>
       </div>
-      <Todo @testEvent="test" />
+      <Todo @testEvent="todoTimeEvent" />
     </div>
   </main>
 </template>

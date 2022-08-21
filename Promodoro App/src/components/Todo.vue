@@ -2,33 +2,50 @@
 import { ref, onMounted } from 'vue'
 import moment from 'moment'
 
-let id = 0;
 const newTodo = ref('');
 const newTodoTime = ref(1);
 const todos = ref([]);
 
-const emits = defineEmits(['testEvent'])
+const emits = defineEmits(['testEvent']);
+
+function todoUpdateTime(todo) {
+    emits('testEvent', Math.floor((todo.deadline - todo.startTime) / 1000));
+}
 
 onMounted(() => {
     todos.value = JSON.parse(localStorage?.getItem('todos')) ?? [];
+    if (todos.value.length === 1) {
+        todoUpdateTime(todos.value[0]);
+    }
 })
+
 function addTodo() {
-    const deadline = Date.now() + newTodoTime.value * 1000 * 60;
+    const dataNow = Date.now();
+    const deadline = dataNow + newTodoTime.value * 1000 * 60;
     todos.value.push({
-        id: id++,
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2),
         text: newTodo.value,
         completed: false,
-        startTime: Date.now(),
+        startTime: dataNow,
         deadline: deadline
     });
     newTodo.value = '';
     localStorage.setItem('todos', JSON.stringify(todos.value));
-    emits('testEvent', Math.floor((deadline - Date.now()) / 1000))
+    if (todos.value.length === 1) {
+        todoUpdateTime(todos.value[0]);
+    }
 }
+
 function removeTodo(todo) {
+    
     todos.value = todos.value.filter((remove) => remove !== todo);
     localStorage.setItem('todos', JSON.stringify(todos.value));
+    if (todos.value.length > 0) {
+        todoUpdateTime(todos.value[0]);
+    }
+
 }
+
 
 </script>
 
@@ -40,9 +57,8 @@ function removeTodo(todo) {
     </form>
     <ul>
         <li v-for="todo in todos" :key="todo.id">
-            <!-- {{ todo.text }} -->
-            <span @click="parseMinsToCountdown()">{{ todo.text }}</span>
-            {{ moment(todo.deadline - todo.startTime).format("mm") }}min
+            {{ todo.text }}
+            {{ moment(todo.deadline - todo.startTime).format("mm") }} min
             <button @click="removeTodo(todo)"><input type="checkbox" /></button>
         </li>
     </ul>
