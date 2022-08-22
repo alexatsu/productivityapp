@@ -1,6 +1,6 @@
 <script setup>
 import Todo from './components/Todo.vue';
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 let timerRunning;
 let btnToggle = ref('Start');
@@ -64,22 +64,22 @@ function todoTimeEvent(secs) {
 </script>
 
 <template>
-  <main>
-    <div class="app">
-      <nav class="nav">Promodoro
-        <ul></ul>
-      </nav>
-      <div class="timer">
+  <body>
+    <header class="nav">Promodoro
+    </header>
+    <main class="main-app">
+      <div class="countdown">
         <button @click="countdownStart()" v-if="seconds > 0">{{ btnToggle }}</button>
         <button @click="countdownReset()" v-if="seconds > 0">Reset</button>
-        <div>{{ display }}</div>
+        <div><span class="timer">{{ display }}</span></div>
         <button @click="addOneMinute" v-if="seconds < 3600">Add one minute:</button>
         <button @click="addFiveMinutes" v-if="seconds < 3360">Add five minutes:</button>
         <button @click="addTenMinutes" v-if="seconds < 3060">Add ten minutes:</button>
       </div>
       <Todo @testEvent="todoTimeEvent" />
-    </div>
-  </main>
+    </main>
+    <footer>Some links</footer>
+  </body>
 </template>
 
 <style scoped lang="scss">

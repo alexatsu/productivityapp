@@ -25,7 +25,7 @@ function addTodo() {
     todos.value.push({
         id: Date.now().toString(36) + Math.random().toString(36).slice(2),
         text: newTodo.value,
-        completed: false,
+        // completed: false, add list for hidden tasks
         startTime: dataNow,
         deadline: deadline
     });
