@@ -1,9 +1,5 @@
 // Primary colors
-$Dblue: linear-gradient(
-    45deg, 
-    hsl(0, 0%, 100%) 0%, 
-    hsl(284, 46%, 49%) 51%, 
-);
+
 @mixin Dblue {
     /* Fallback: Set a background color. */
     background-color: red;

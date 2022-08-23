@@ -3,7 +3,7 @@
 
 * {
   scroll-behavior: smooth;
-  outline: 1px red solid;
+  // outline: 1px red solid;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -34,7 +34,7 @@ body {
 }
 .nav {
   height: 100%;
-  font-size: 10vw;
+  font-size: 7vw;
   font-family: f.$primaryFont;
   font-weight: 600;
   color: rgb(255, 255, 255);
@@ -45,7 +45,7 @@ body {
   min-height: 300px;
   width: 100%;
   max-width: 700px;
-  background-color: rgb(110, 255, 175);
+  background-color: rgb(255, 255, 255);
   margin: auto;
 
   .countdown {
