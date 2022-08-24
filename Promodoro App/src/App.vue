@@ -1,10 +1,10 @@
 <script setup>
 import Todo from './components/Todo.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 //fontawesome imports |
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { 
+import {
   faPlay,
   faPause,
   faArrowRotateRight,
@@ -12,22 +12,27 @@ import {
   fa1,
   faM,
   fa5,
-  fa0 } from '@fortawesome/free-solid-svg-icons'
+  fa0
+} from '@fortawesome/free-solid-svg-icons'
 library.add(
-  faPlay, 
-  faPause, 
-  faArrowRotateRight, 
-  faPlus, 
-  fa1, 
-  fa5, 
-  fa0, 
-  faM,)
+  faPlay,
+  faPause,
+  faArrowRotateRight,
+  faPlus,
+  fa1,
+  fa5,
+  fa0,
+  faM)
 //fontawesome imports |
 
 let timerRunning;
-let btnToggle = ref('Start');
+let btnToggle = ref(true);
 const seconds = ref(0);
-const display = ref("00 : 00");
+const display = ref("00 : 00")
+
+const playButtonIcon = computed(() => {
+return btnToggle.value ? 'fa-play fa-solid' : 'fa-pause fa-solid' 
+})
 
 function formatCode(secs) {
   const currentMinutes = Math.floor(secs / 60);
@@ -37,9 +42,9 @@ function formatCode(secs) {
 }
 
 function countdownStart() {
-  clearInterval(timerRunning); // prevent timer from looping with a delay
-  if (btnToggle.value === 'Start' || btnToggle.value === 'Resume') {
-    btnToggle.value = 'Pause';
+  if (btnToggle.value === true) {
+    btnToggle.value = false;
+    clearInterval(timerRunning); // prevent timer from looping with a delay
     timerRunning = setInterval(() => {
       if (seconds.value > 0) {
         seconds.value--;
@@ -48,8 +53,8 @@ function countdownStart() {
         countdownReset();
       }
     }, 1000)
-  } else if (btnToggle.value === 'Pause') {
-    btnToggle.value = 'Resume';
+  } else if (btnToggle.value === false) {
+    btnToggle.value = true;
     clearInterval(timerRunning);
   }
 }
@@ -58,7 +63,7 @@ function countdownReset() {
   seconds.value = 0;
   display.value = ("00 : 00");
   clearInterval(timerRunning);
-  btnToggle.value = 'Start';
+  btnToggle.value = true;
 }
 
 function addSeconds(secs) {
@@ -112,9 +117,21 @@ function todoTimeEvent(secs) {
           <font-awesome-icon icon="fa-solid fa-m" transform='shrink-3' />
         </button>
       </div>
-      <font-awesome-icon icon="fa-solid fa-play" size='2x' />
-      <font-awesome-icon icon="fa-solid fa-pause" size='2x' />
-      <font-awesome-icon icon="fa-solid fa-arrow-rotate-right" size='2x' rotation="180" />
+
+      <font-awesome-icon 
+        @click="countdownStart()" 
+        :icon="btnToggle ? 'fa-play fa-solid' : 'fa-pause fa-solid'" 
+        size='2x' />
+      <font-awesome-icon 
+        @click="countdownStart()" 
+        :icon="playButtonIcon" 
+        size='2x' />
+      <font-awesome-icon 
+        @click="countdownReset()" 
+        icon="fa-solid fa-arrow-rotate-right" 
+        size='2x' 
+        rotation="180" />
+
       <Todo @testEvent="todoTimeEvent" />
     </main>
     <footer>Some links</footer>
