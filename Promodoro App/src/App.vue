@@ -93,13 +93,26 @@ function todoTimeEvent(secs) {
 <template>
 
   <body>
-    <header class="nav">Promodoro
+    <header class="nav">
+      <span>Productivity App</span>
     </header>
     <main class="main-app">
-      <div class="countdown">
-        <div><span class="timer">{{ display }}</span></div>
-        <button @click="countdownStart()" v-if="seconds > 0">{{ btnToggle }}</button>
-        <button @click="countdownReset()" v-if="seconds > 0">Reset</button>
+        <div class="countdown">
+          <span class="timer">{{ display }}</span>
+          <div class="icons">
+            <button class="icon1" @click="countdownStart()">
+              <font-awesome-icon 
+              :icon="playButtonIcon"
+              size='2x' />
+            </button>
+            <button class="icon2" @click="countdownReset()">
+              <font-awesome-icon 
+              icon="fa-solid fa-arrow-rotate-right" 
+              size='2x' 
+              rotation="270" />
+            </button>
+          </div>
+        </div>
         <button @click="addOneMinute" v-if="seconds < 3600">
           <font-awesome-icon icon="fa-solid fa-plus" transform='shrink-5' />
           <font-awesome-icon icon="fa-solid fa-1" size='1x' />
@@ -116,21 +129,6 @@ function todoTimeEvent(secs) {
           <font-awesome-icon icon="fa-solid fa-0" size='1x' />
           <font-awesome-icon icon="fa-solid fa-m" transform='shrink-3' />
         </button>
-      </div>
-
-      <font-awesome-icon 
-        @click="countdownStart()" 
-        :icon="btnToggle ? 'fa-play fa-solid' : 'fa-pause fa-solid'" 
-        size='2x' />
-      <font-awesome-icon 
-        @click="countdownStart()" 
-        :icon="playButtonIcon" 
-        size='2x' />
-      <font-awesome-icon 
-        @click="countdownReset()" 
-        icon="fa-solid fa-arrow-rotate-right" 
-        size='2x' 
-        rotation="180" />
 
       <Todo @testEvent="todoTimeEvent" />
     </main>

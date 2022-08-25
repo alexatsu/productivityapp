@@ -8,53 +8,99 @@
   margin: 0;
   padding: 0;
 }
-
 body {
+  height: 100vh; //temporarily
   font-size: 16px;
   background-size: 300% 300%;
   background-image: linear-gradient(
-        -45deg, 
-        hsl(199, 75%, 56%) 0%, 
-        hsl(230, 74%, 62%) 25%, 
-        hsl(284, 46%, 49%) 51%, 
-        hsl(338, 100%, 60%) 100%
-  );  
-  -webkit-animation: AnimateBG 20s ease infinite;  
-          animation: AnimateBG 20s ease infinite;
-  @-webkit-keyframes AnimateBG { 
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+    -45deg,
+    hsl(199, 75%, 56%) 0%,
+    hsl(230, 74%, 62%) 25%,
+    hsl(284, 46%, 49%) 51%,
+    hsl(338, 100%, 60%) 100%
+  );
+  -webkit-animation: AnimateBG 20s ease infinite;
+  animation: AnimateBG 20s ease infinite;
+  @-webkit-keyframes AnimateBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
-  @keyframes AnimateBG { 
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-  }
-}
-.nav {
-  height: 100%;
-  font-size: 7vw;
-  font-family: f.$primaryFont;
-  font-weight: 600;
-  color: rgb(255, 255, 255);
-  text-align: center;
-  padding: 1rem;
-}
-.main-app {
-  min-height: 300px;
-  width: 100%;
-  max-width: 700px;
-  background-color: rgb(255, 255, 255);
-  margin: auto;
-
-  .countdown {
-    background-color: rgb(110, 255, 175);
-    font-family: f.$countdownFont;
-    font-size: 3rem;
-    .timer {
-      @include c.Dblue;
+  @keyframes AnimateBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
     }
   }
 }
 
+.nav {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  span {
+    font-size: 2.2rem;
+    font-family: f.$primaryFont;
+    font-weight: 600;
+    color: c.$Lpastel;
+    text-shadow: 0 0 3px c.$Dpurple, 0 0 30px c.$Dpurple, 0 0 1px c.$Dpurple,
+      0 0 1px c.$Dpurple;
+  }
+}
+
+.main-app {
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+
+  background: rgba(251, 251, 251, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.9px);
+  -webkit-backdrop-filter: blur(3.9px);
+  border: 1px solid rgba(255, 255, 255, 0.189);
+  .countdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .timer {
+    color: c.$Lpastel;
+    padding-top: 40px;
+    font-size: 3rem;
+    font-family: f.$countdownFont;
+    text-shadow: 0 0 55px rgba(230, 228, 228, 0.879), 0 0 1px c.$Lpastel,
+      0 0 3px c.$Dpurple, 0 0 1px c.$Dpurple;
+  }
+  .icons {
+    display: flex;
+    button.icon1  {
+      @include c.buttonStyles(-45deg)
+    }
+    button.icon2 {
+      @include c.buttonStyles(45deg)
+    }
+    button:hover {
+      background-position: right center; /* change the direction of the change here */
+      color: #fff;
+      text-decoration: none;
+    }
+    .icon1 {
+      color: c.$Lpastel;
+    }
+    .icon2 {
+      color: c.$Lpastel;
+    }
+  }
+}
