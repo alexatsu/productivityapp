@@ -36,14 +36,12 @@ function addTodo() {
     }
 }
 
-function removeTodo(todo) {
-    
-    todos.value = todos.value.filter((remove) => remove !== todo);
+function removeTodo(completed) {
+    todos.value = todos.value.filter((todo) => todo !== completed);
     localStorage.setItem('todos', JSON.stringify(todos.value));
     if (todos.value.length > 0) {
         todoUpdateTime(todos.value[0]);
     }
-
 }
 
 
