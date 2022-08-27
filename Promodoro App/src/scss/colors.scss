@@ -1,8 +1,12 @@
 // Primary colors
 $Dpurple: #2E0249;
 $Lpink: #fa3081;
-$Lpastel: #fdede5;
-
+$Lpastel: hsl(20, 86%, 95%);
+@mixin test {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgb(222, 34, 34)), to(#333));
+	-webkit-background-clip:	text;
+	-webkit-text-fill-color:	transparent;
+}
 @mixin buttonStyles($direction) {
     background-image: linear-gradient(
         $direction,

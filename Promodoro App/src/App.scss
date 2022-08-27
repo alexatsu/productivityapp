@@ -8,6 +8,7 @@
   margin: 0;
   padding: 0;
 }
+
 body {
   height: 100vh; //temporarily
   font-size: 16px;
@@ -21,6 +22,7 @@ body {
   );
   -webkit-animation: AnimateBG 20s ease infinite;
   animation: AnimateBG 20s ease infinite;
+
   @-webkit-keyframes AnimateBG {
     0% {
       background-position: 0% 50%;
@@ -32,6 +34,7 @@ body {
       background-position: 0% 50%;
     }
   }
+
   @keyframes AnimateBG {
     0% {
       background-position: 0% 50%;
@@ -49,6 +52,7 @@ body {
   padding: 1.5rem;
   display: flex;
   justify-content: center;
+  
   span {
     font-size: 2.2rem;
     font-family: f.$primaryFont;
@@ -63,7 +67,6 @@ body {
   width: 100%;
   max-width: 700px;
   margin: auto;
-
   background: rgba(251, 251, 251, 0.1);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -71,39 +74,64 @@ body {
   -webkit-backdrop-filter: blur(3.9px);
   border: 1px solid rgba(255, 255, 255, 0.189);
   transition: border-radius 0.5s;
+
   @media (max-width: 700px) {
     border-radius: 0;
     transition: border-radius 0.5s;
   }
+
   .countdown {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .timer {
-    color: c.$Lpastel;
-    padding-top: 40px;
-    font-size: 3rem;
-    font-family: f.$countdownFont;
-    text-shadow: 0 0 55px rgba(230, 228, 228, 0.879), 0 0 1px c.$Lpastel,
-      0 0 3px c.$Dpurple, 0 0 1px c.$Dpurple;
+
+  .round-border {
+    margin-top: 50px;
+    padding: 25px;
+    border: 1px rgb(255, 255, 255) solid;
+    box-shadow: 0 0 1px 0 rgb(255, 255, 255) inset, 0 0 1px 0 rgb(255, 255, 255);
+    border-radius: 50%;
+
+    .timer-background {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      height: 250px;
+      width: 250px;
+      border-radius: 50%;
+
+      .timer {
+        color: black;
+        //color is temp, change to gradient later    
+        font-size: 2.5rem;
+        font-family: f.$countdownFont;
+      }
+    }
   }
+
   .icons {
     display: flex;
+
     button.icon1  {
       @include c.buttonStyles(-45deg)
     }
+
     button.icon2 {
       @include c.buttonStyles(45deg)
     }
+
     button:hover {
       background-position: right center; /* change the direction of the change here */
       color: #fff;
       text-decoration: none;
     }
+
     .icon1 {
       color: c.$Lpastel;
     }
+
     .icon2 {
       color: c.$Lpastel;
     }

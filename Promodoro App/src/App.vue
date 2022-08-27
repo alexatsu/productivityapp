@@ -98,7 +98,11 @@ function todoTimeEvent(secs) {
     </header>
     <main class="main-app">
         <div class="countdown">
-          <span class="timer">{{ display }}</span>
+          <div class="round-border">
+            <div class="timer-background">
+              <span class="timer">{{ display }}</span>
+            </div>
+          </div>
           <div class="icons">
             <button class="icon1" @click="countdownStart()">
               <font-awesome-icon 

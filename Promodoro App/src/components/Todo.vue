@@ -15,6 +15,7 @@ function todoUpdateTime(todo) {
 
 onMounted(() => {
     todos.value = JSON.parse(localStorage?.getItem('todos')) ?? [];
+
     if (todos.value.length === 1) {
         todoUpdateTime(todos.value[0]);
     }
@@ -23,35 +24,54 @@ onMounted(() => {
 function addTodo() {
     const dataNow = Date.now();
     const deadline = dataNow + newTodoTime.value * 1000 * 60;
+
     todos.value.push({
         id: Date.now().toString(36) + Math.random().toString(36).slice(2),
         text: newTodo.value,
-        completed: false,
         startTime: dataNow,
         deadline: deadline
     });
     newTodo.value = '';
+
     localStorage.setItem('todos', JSON.stringify(todos.value));
     if (todos.value.length === 1) {
         todoUpdateTime(todos.value[0]);
     }
 }
 
-function hideCompleted(completed) {
-    const pushing = todos.value = todos.value.filter((todo) => todo !== completed);
-    completedTodos.value.push(pushing);
-
+function removeTodo(type, remove) {
+    if (type === "need") {
+        todos.value = todos.value.filter((todo) => todo !== remove);
+    }
+    else {
+        completedTodos.value = completedTodos.value.filter((todo) => todo !== remove);
+    }
     localStorage.setItem('todos', JSON.stringify(todos.value));
     if (todos.value.length > 0) {
         todoUpdateTime(todos.value[0]);
     }
 }
-function removeTodo(completed) {
-    todos.value = todos.value.filter((todo) => todo !== completed);    
+
+function hideCompleted(type, index) {
+    if (type === 'need') {
+        const completed = todos.value.splice(index, 1);
+        completedTodos.value.push(...completed);
+        console.log(completed);
+    } else {
+        const notCompleted = completedTodos.value.splice(index, 1);
+        todos.value.push(...notCompleted);
+    }
+    
     localStorage.setItem('todos', JSON.stringify(todos.value));
     if (todos.value.length > 0) {
         todoUpdateTime(todos.value[0]);
     }
+
+    // localStorage.setItem('todos', JSON.stringify(completedTodos.value));
+    // if (completedTodos.value.length > 0) {
+    //     todoUpdateTime(completedTodos.value[0]);
+    // }
+    // need to check how to update finished todos
 }
 
 
@@ -66,22 +86,24 @@ function removeTodo(completed) {
         <button>Add todo</button>
     </form>
     <ul class="current-todos">
-        <li v-for="todo in todos" :key="todo.id">
+        <li v-for="(todo, index) in todos" :key="todo.id">
+            <input type="checkbox" @click="hideCompleted('need', index)" />
             {{ todo.text }}
             {{ moment(todo.deadline - todo.startTime).format("mm") }} min
-            <button @click="hideCompleted(todo)"><input type="checkbox" /></button>
+            <button @click="removeTodo('need', todo)">X</button>
         </li>
     </ul>
     <!-- remove these below after i finish completed todos -->
-    <br/>
+    <br />
     <hr />
-    <br/>
+    <br />
     <!-- yep here -->
     <ul class="completed-todos">
-        <li v-for="todo in completedTodos" :key="todo.id">
-            {{ todo.text }} 
+        <li v-for="(todo, index) in completedTodos" :key="todo.id">
+            <input type="checkbox" checked @click="hideCompleted('completed', index)" />
+            {{ todo.text }}
             {{ moment(todo.deadline - todo.startTime).format("mm") }} min
-            <button @click="removeTodo(todo)"><input type="checkbox" /></button>
+            <button @click="removeTodo('completed', todo)">X</button>
         </li>
     </ul>
 </template>
