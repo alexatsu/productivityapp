@@ -5,6 +5,7 @@ import moment from 'moment'
 const newTodo = ref('');
 const newTodoTime = ref(1);
 const todos = ref([]);
+const completedTodos = ref([]);
 
 const emits = defineEmits(['testEvent']);
 
@@ -25,7 +26,7 @@ function addTodo() {
     todos.value.push({
         id: Date.now().toString(36) + Math.random().toString(36).slice(2),
         text: newTodo.value,
-        // completed: false, add list for hidden tasks
+        completed: false,
         startTime: dataNow,
         deadline: deadline
     });
@@ -36,13 +37,24 @@ function addTodo() {
     }
 }
 
-function removeTodo(completed) {
-    todos.value = todos.value.filter((todo) => todo !== completed);
+function hideCompleted(completed) {
+    const pushing = todos.value = todos.value.filter((todo) => todo !== completed);
+    completedTodos.value.push(pushing);
+
     localStorage.setItem('todos', JSON.stringify(todos.value));
     if (todos.value.length > 0) {
         todoUpdateTime(todos.value[0]);
     }
 }
+function removeTodo(completed) {
+    todos.value = todos.value.filter((todo) => todo !== completed);    
+    localStorage.setItem('todos', JSON.stringify(todos.value));
+    if (todos.value.length > 0) {
+        todoUpdateTime(todos.value[0]);
+    }
+}
+
+
 
 
 </script>
@@ -53,9 +65,21 @@ function removeTodo(completed) {
         <input v-model="newTodoTime" type="number" min="1" max="60" required />min
         <button>Add todo</button>
     </form>
-    <ul>
+    <ul class="current-todos">
         <li v-for="todo in todos" :key="todo.id">
             {{ todo.text }}
+            {{ moment(todo.deadline - todo.startTime).format("mm") }} min
+            <button @click="hideCompleted(todo)"><input type="checkbox" /></button>
+        </li>
+    </ul>
+    <!-- remove these below after i finish completed todos -->
+    <br/>
+    <hr />
+    <br/>
+    <!-- yep here -->
+    <ul class="completed-todos">
+        <li v-for="todo in completedTodos" :key="todo.id">
+            {{ todo.text }} 
             {{ moment(todo.deadline - todo.startTime).format("mm") }} min
             <button @click="removeTodo(todo)"><input type="checkbox" /></button>
         </li>
