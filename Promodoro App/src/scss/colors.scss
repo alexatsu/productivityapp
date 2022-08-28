@@ -1,4 +1,5 @@
 // Primary colors
+
 $Dpurple: #2E0249;
 $Lpink: #fa3081;
 $Lpastel: hsl(20, 86%, 95%);
@@ -16,12 +17,13 @@ $Lpastel: hsl(20, 86%, 95%);
         hsla(338, 100%, 60%, 0.491) 100%
       );
       margin: 10px;
-      padding: 10px;
+      padding: 5px;
       transition: 0.5s;
       background-size: 200% auto;
       box-shadow: 0 0 3px rgb(254, 180, 239);
       border: none;
       border-radius: 15px;
-      min-width: 70px;
+      min-width: 45px;
 }
 
+//Secondary colors

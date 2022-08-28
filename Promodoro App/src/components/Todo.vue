@@ -11,14 +11,16 @@ const emits = defineEmits(['testEvent']);
 
 function todoUpdateTime(todo) {
     emits('testEvent', Math.floor((todo.deadline - todo.startTime) / 1000));
+    console.log("check");
 }
 
 onMounted(() => {
     todos.value = JSON.parse(localStorage?.getItem('todos')) ?? [];
-
     if (todos.value.length === 1) {
         todoUpdateTime(todos.value[0]);
     }
+
+    // retrieveTodosFromLocalStorage()
 })
 
 function addTodo() {
@@ -46,6 +48,7 @@ function removeTodo(type, remove) {
     else {
         completedTodos.value = completedTodos.value.filter((todo) => todo !== remove);
     }
+
     localStorage.setItem('todos', JSON.stringify(todos.value));
     if (todos.value.length > 0) {
         todoUpdateTime(todos.value[0]);
@@ -66,48 +69,43 @@ function hideCompleted(type, index) {
     if (todos.value.length > 0) {
         todoUpdateTime(todos.value[0]);
     }
-
-    // localStorage.setItem('todos', JSON.stringify(completedTodos.value));
-    // if (completedTodos.value.length > 0) {
-    //     todoUpdateTime(completedTodos.value[0]);
-    // }
-    // need to check how to update finished todos
 }
 
-
-
+// function retrieveTodosFromLocalStorage() {
+//   const localCompletedTodos = JSON.parse(localStorage.getItem('completed-todos'))
+//   if (Array.isArray(localCompletedTodos) && localCompletedTodos.length) {
+//       completedTodos.value = localCompletedTodos
+//   }
+// }
 
 </script>
 
 <template>
-    <form @submit.prevent="addTodo()">
-        <input v-model="newTodo" placeholder="Tasks" required />
-        <input v-model="newTodoTime" type="number" min="1" max="60" required />min
-        <button>Add todo</button>
-    </form>
-    <ul class="current-todos">
-        <li v-for="(todo, index) in todos" :key="todo.id">
-            <input type="checkbox" @click="hideCompleted('need', index)" />
-            {{ todo.text }}
-            {{ moment(todo.deadline - todo.startTime).format("mm") }} min
-            <button @click="removeTodo('need', todo)">X</button>
-        </li>
-    </ul>
-    <!-- remove these below after i finish completed todos -->
-    <br />
-    <hr />
-    <br />
-    <!-- yep here -->
-    <ul class="completed-todos">
-        <li v-for="(todo, index) in completedTodos" :key="todo.id">
-            <input type="checkbox" checked @click="hideCompleted('completed', index)" />
-            {{ todo.text }}
-            {{ moment(todo.deadline - todo.startTime).format("mm") }} min
-            <button @click="removeTodo('completed', todo)">X</button>
-        </li>
-    </ul>
+    <div class="todo-section">
+        <form @submit.prevent="addTodo()">
+            <input v-model="newTodo" placeholder="Tasks" required />
+            <input v-model="newTodoTime" type="number" min="1" max="60" required />min
+            <button>Add todo</button>
+        </form>
+        <ul class="current-todos">
+            <li v-for="(todo, index) in todos" :key="todo.id">
+                <input type="checkbox" @click="hideCompleted('need', index)" />
+                {{ todo.text }}
+                {{ moment(todo.deadline - todo.startTime).format("mm") }} min
+                <button @click="removeTodo('need', todo)">X</button>
+            </li>
+        </ul>
+        <ul class="completed-todos">
+            <li v-for="(todo, index) in completedTodos" :key="todo.id">
+                <input type="checkbox" checked @click="hideCompleted('completed', index)" />
+                {{ todo.text }}
+                {{ moment(todo.deadline - todo.startTime).format("mm") }} min
+                <button @click="removeTodo('completed', todo)">X</button>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <style scoped lang="scss">
-@use '../components/Todo.scss';
+    @use '../components/Todo.scss';
 </style>

@@ -31,7 +31,7 @@ const seconds = ref(0);
 const display = ref("00 : 00")
 
 const playButtonIcon = computed(() => {
-return btnToggle.value ? 'fa-play fa-solid' : 'fa-pause fa-solid' 
+  return btnToggle.value ? 'fa-play fa-solid' : 'fa-pause fa-solid'
 })
 
 function formatCode(secs) {
@@ -66,23 +66,6 @@ function countdownReset() {
   btnToggle.value = true;
 }
 
-function addSeconds(secs) {
-  seconds.value += secs;
-  display.value = formatCode(seconds.value);
-}
-
-function addOneMinute() {
-  addSeconds(60);
-}
-
-function addFiveMinutes() {
-  addSeconds(300);
-}
-
-function addTenMinutes() {
-  addSeconds(600);
-}
-
 function todoTimeEvent(secs) {
   seconds.value = secs;
   display.value = formatCode(seconds.value);
@@ -97,43 +80,29 @@ function todoTimeEvent(secs) {
       <span>Productivity App</span>
     </header>
     <main class="main-app">
-        <div class="countdown">
-          <div class="round-border">
-            <div class="timer-background">
-              <span class="timer">{{ display }}</span>
+      <div class="countdown">
+        <div class="round-border">
+          <div class="timer-background">
+            <span class="timer">{{ display }}</span>
+            <div class="icons">
+              <button class="icon1" @click="countdownStart()">
+                <font-awesome-icon :icon="playButtonIcon" size='2x' />
+              </button>
+              <button class="icon2" @click="countdownReset()">
+                <font-awesome-icon icon="fa-solid fa-arrow-rotate-right" size='2x' rotation="270" />
+              </button>
             </div>
           </div>
-          <div class="icons">
-            <button class="icon1" @click="countdownStart()">
-              <font-awesome-icon 
-              :icon="playButtonIcon"
-              size='2x' />
-            </button>
-            <button class="icon2" @click="countdownReset()">
-              <font-awesome-icon 
-              icon="fa-solid fa-arrow-rotate-right" 
-              size='2x' 
-              rotation="270" />
-            </button>
-          </div>
         </div>
-        <button @click="addOneMinute" v-if="seconds < 3600">
-          <font-awesome-icon icon="fa-solid fa-plus" transform='shrink-5' />
-          <font-awesome-icon icon="fa-solid fa-1" size='1x' />
-          <font-awesome-icon icon="fa-solid fa-m" transform='shrink-3' />
-        </button>
-        <button @click="addFiveMinutes" v-if="seconds < 3360">
-          <font-awesome-icon icon="fa-solid fa-plus" transform='shrink-5' />
-          <font-awesome-icon icon="fa-solid fa-5" size='1x' />
-          <font-awesome-icon icon="fa-solid fa-m" transform='shrink-3' />
-        </button>
-        <button @click="addTenMinutes" v-if="seconds < 3060">
-          <font-awesome-icon icon="fa-solid fa-plus" transform='shrink-5' />
-          <font-awesome-icon icon="fa-solid fa-1" size='1x' />
-          <font-awesome-icon icon="fa-solid fa-0" size='1x' />
-          <font-awesome-icon icon="fa-solid fa-m" transform='shrink-3' />
-        </button>
-
+        <!-- <div class="icons">
+          <button class="icon1" @click="countdownStart()">
+            <font-awesome-icon :icon="playButtonIcon" size='2x' />
+          </button>
+          <button class="icon2" @click="countdownReset()">
+            <font-awesome-icon icon="fa-solid fa-arrow-rotate-right" size='2x' rotation="270" />
+          </button>
+        </div> -->
+      </div>
       <Todo @testEvent="todoTimeEvent" />
     </main>
     <footer>Some links</footer>

@@ -1,3 +1,19 @@
-div {
-    color: rgb(255, 77, 0);
+.todo-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 30px;
+
+    input[type=text] {
+        border: 0.1em;
+      }
+     input {
+        transition: background-color 0.2s;
+      }
+      input[type=text]:focus {
+        outline: none;
+        background-color: #fff1f6;
+        transition: background-color 0.2s;
+      }
 }
