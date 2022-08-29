@@ -20,7 +20,8 @@ onMounted(() => {
         todoUpdateTime(todos.value[0]);
     }
 
-    // retrieveTodosFromLocalStorage()
+    // retrieveTodosFromLocalStorage() 
+    // still need to fix getting completed todos after deleting them
 })
 
 function addTodo() {
@@ -77,7 +78,7 @@ function hideCompleted(type, index) {
 //       completedTodos.value = localCompletedTodos
 //   }
 // }
-
+// read what i should fix in onMounted hook
 </script>
 
 <template>
