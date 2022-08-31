@@ -1,6 +1,7 @@
 <script setup>
 import Todo from './components/Todo.vue';
 import { ref, computed } from 'vue';
+import { useCounter } from './composables/timerUpdate.js'
 //fontawesome imports |
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -21,7 +22,7 @@ library.add(
 
 let timerRunning;
 let btnToggle = ref(true);
-let whiteTheme = ref(true);
+// let whiteTheme = ref(true); white/dark theme setup later
 const seconds = ref(0);
 const display = ref("00 : 00")
 
@@ -70,12 +71,15 @@ function todoTimeEvent(secs) {
   display.value = formatCode(seconds.value);
 }
 
+
+const { counter, increment } = useCounter();
 </script>
 
 <template>
 
   <body>
     <header class="nav">
+      <button @click="increment()" >Counter: {{ counter }}</button>
       <span>Productivity App</span>
     </header>
     <main class="main-app">

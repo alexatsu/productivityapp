@@ -73,6 +73,7 @@ function hideCompleted(type, index) {
   //   }
   // }
   // read what i should fix in onMounted hook
+
 </script>
   <template>
   <div class="todo-section">
