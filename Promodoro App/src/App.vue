@@ -1,28 +1,18 @@
 <script setup>
 import Todo from './components/Todo.vue';
-import { ref, computed } from 'vue';
+import { ref, computed, useEmitTest } from 'vue';
 //fontawesome imports |
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faPlay,
   faPause,
-  faArrowRotateRight,
-  faPlus,
-  fa1,
-  faM,
-  fa5,
-  fa0
+  faArrowRotateRight
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faPlay,
   faPause,
-  faArrowRotateRight,
-  faPlus,
-  fa1,
-  fa5,
-  fa0,
-  faM)
+  faArrowRotateRight)
 //fontawesome imports |
 
 let timerRunning;
@@ -42,7 +32,7 @@ function formatCode(secs) {
 }
 
 function countdownStart() {
-  if (btnToggle.value === true) {
+  if (btnToggle.value === true) { 
     btnToggle.value = false;
     clearInterval(timerRunning); // prevent timer from looping with a delay
     timerRunning = setInterval(() => {
@@ -105,8 +95,11 @@ function todoTimeEvent(secs) {
       </div>
       <Todo @testEvent="todoTimeEvent" />
     </main>
-    <footer>Some links</footer>
+    <footer>
+      <span>Some links</span>
+    </footer>
   </body>
+
 </template>
 
 <style scoped lang="scss">
