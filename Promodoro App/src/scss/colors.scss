@@ -1,26 +1,25 @@
 // Primary colors
-
-$Dpurple: #2E0249;
-$Lpink: #fa3081;
+$white: hsl(0, 0%, 100%);
+$black: hsl(0, 0%, 0%);
 $Lpastel: hsl(20, 86%, 95%);
-@mixin test {
-  background: -webkit-gradient(linear, left top, left bottom, from(rgb(222, 34, 34)), to(#333));
-	-webkit-background-clip:	text;
-	-webkit-text-fill-color:	transparent;
-}
+$Dpurple: hsl(277, 95%, 15%);
+$Lgrayish-blue: hsla(199, 75%, 56%, 0.534);
+$Lblue: hsl(230, 74%, 62%);
+$Lpurple: hsl(284, 46%, 49%);
+$Lpink: hsl(338, 100%, 60%);
+
 @mixin buttonStyles($direction) {
     background-image: linear-gradient(
         $direction,
-        hsla(199, 75%, 56%, 0.534) 0%,
-        hsl(230, 74%, 62%) 25%,
-        hsl(284, 46%, 49%) 51%,
-        hsla(338, 100%, 60%, 0.491) 100%
+        $Lgrayish-blue 0%,
+        $Lblue 25%,
+        $Lpurple 51%,
+        $Lpink 100%
       );
       margin: 10px;
       padding: 5px;
       transition: 0.5s;
       background-size: 200% auto;
-      box-shadow: 0 0 3px rgb(254, 180, 239);
       border: none;
       border-radius: 15px;
       min-width: 45px;

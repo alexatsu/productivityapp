@@ -1,19 +1,83 @@
-.todo-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding-top: 30px;
+@use "../scss/colors.scss" as c;
+@use "../scss/fonts.scss" as f;
 
-    // input[type=text] {
-    //     border: 0.1em;
-    //   }
-    //  input {
-    //     transition: background-color 0.2s;
-    //   }
-    //   input[type=text]:focus {
-    //     outline: none;
-    //     background-color: #fff1f6;
-    //     transition: background-color 0.2s;
-    //   }
+.todo-section {
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+
+  .todo-form {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    //inputs extends/mixin for reusability
+    %inputs {
+      background: hsla(284, 100%, 84%, 0.201);
+      height: 30px;
+      border: 0;
+      outline: 0;
+    }
+
+    input::placeholder {
+      color: red;
+      opacity: 1;
+    }
+    .task-holder {
+      @extend %inputs;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      padding-left: 10px;
+    }
+
+    .task-number {
+      @extend %inputs;
+      border-bottom-right-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .task-btn {
+      @extend %inputs;
+      border-radius: 10px;
+      width: 40px;
+      margin-left: 15px;
+    }
+  }
+
+  .completed {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .current-todos,
+  .completed-todos {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+    margin: auto;
+
+    li {
+      background: linear-gradient(
+        45deg,
+        hsla(338, 100%, 57%, 0.621),
+        hsla(237, 88%, 32%, 0.537)
+      );
+      box-shadow: 0 0 15px 1px rgba(176, 176, 176, 0.573);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
+      list-style: none;
+      border-radius: 15px;
+      margin-bottom: 10px;
+      min-height: 50px;
+      min-width: 300px;
+
+      color: hsl(0, 0%, 100%);
+
+      //   still in progress
+      //       max width, max height, wrap, and so on
+    
+    }
+  }
 }

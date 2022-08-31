@@ -1,28 +1,37 @@
 <script setup>
 import Todo from './components/Todo.vue';
-import { ref, computed, useEmitTest } from 'vue';
+import { ref, computed } from 'vue';
 //fontawesome imports |
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faPlay,
   faPause,
-  faArrowRotateRight
+  faArrowRotateRight,
+  faChevronDown,
+  faMoon
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faPlay,
   faPause,
-  faArrowRotateRight)
+  faArrowRotateRight,
+  faChevronDown,
+  faMoon)
 //fontawesome imports |
 
 let timerRunning;
 let btnToggle = ref(true);
+let whiteTheme = ref(true);
 const seconds = ref(0);
 const display = ref("00 : 00")
 
 const playButtonIcon = computed(() => {
   return btnToggle.value ? 'fa-play fa-solid' : 'fa-pause fa-solid'
 })
+
+// const whiteDarkTheme = computed(() => {
+//   return whiteTheme.value ? 
+// })
 
 function formatCode(secs) {
   const currentMinutes = Math.floor(secs / 60);
@@ -70,6 +79,12 @@ function todoTimeEvent(secs) {
       <span>Productivity App</span>
     </header>
     <main class="main-app">
+      <div class="white-dark">
+        <div class="toggle-btn" id="_1st-toggle-btn">
+          <input type="checkbox">
+          <span></span>
+        </div>
+      </div>
       <div class="countdown">
         <div class="round-border">
           <div class="timer-background">
@@ -84,14 +99,6 @@ function todoTimeEvent(secs) {
             </div>
           </div>
         </div>
-        <!-- <div class="icons">
-          <button class="icon1" @click="countdownStart()">
-            <font-awesome-icon :icon="playButtonIcon" size='2x' />
-          </button>
-          <button class="icon2" @click="countdownReset()">
-            <font-awesome-icon icon="fa-solid fa-arrow-rotate-right" size='2x' rotation="270" />
-          </button>
-        </div> -->
       </div>
       <Todo @testEvent="todoTimeEvent" />
     </main>
