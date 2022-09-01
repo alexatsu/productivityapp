@@ -13,10 +13,13 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "@fortawesome/vue-fontawesome": "^3.0.1",
     "moment": "^2.29.4",
+    "nanoid": "^4.0.0",
+    "progressbar.js": "^1.1.0",
     "sass": "^1.54.4",
     "vue": "^3.2.37"
   },
   "devDependencies": {
+    "@types/progressbar.js": "^1.1.2",
     "@vitejs/plugin-vue": "^3.0.1",
     "vite": "^3.0.4"
   }

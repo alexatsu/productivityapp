@@ -5,8 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const newTodo = ref('');
 const newTodoTime = ref(1);
+
 const todos = ref([]);
 const completedTodos = ref([]);
+
 const emits = defineEmits(['testEvent']);
 
 function todoUpdateTime(todo) {
@@ -17,9 +19,8 @@ onMounted(() => {
   todos.value = JSON.parse(localStorage?.getItem('todos')) ?? [];
   if (todos.value.length === 1) {
     todoUpdateTime(todos.value[0]);
-  }
-  // retrieveTodosFromLocalStorage() 
-  // still need to fix getting completed todos after deleting them
+  } 
+  retrieveTodosFromLocalStorage() 
 })
 
 function addTodo() {
@@ -44,6 +45,7 @@ function removeTodo(type, remove) {
   }
   else {
     completedTodos.value = completedTodos.value.filter((todo) => todo !== remove);
+    localStorage.setItem('completed-todos', JSON.stringify(completedTodos.value))
   }
   localStorage.setItem('todos', JSON.stringify(todos.value));
   if (todos.value.length > 0) {
@@ -62,17 +64,19 @@ function hideCompleted(type, index) {
   }
 
   localStorage.setItem('todos', JSON.stringify(todos.value));
+  localStorage.setItem('completed-todos', JSON.stringify(completedTodos.value))
+  
   if (todos.value.length > 0) {
     todoUpdateTime(todos.value[0]);
   }
 }
-  // function retrieveTodosFromLocalStorage() {
-  //   const localCompletedTodos = JSON.parse(localStorage.getItem('completed-todos'))
-  //   if (Array.isArray(localCompletedTodos) && localCompletedTodos.length) {
-  //       completedTodos.value = localCompletedTodos
-  //   }
-  // }
-  // read what i should fix in onMounted hook
+function retrieveTodosFromLocalStorage() {
+    const localCompletedTodos = JSON.parse(localStorage.getItem('completed-todos'))
+    if (Array.isArray(localCompletedTodos) && localCompletedTodos.length) {
+        completedTodos.value = localCompletedTodos
+    }
+}
+
 
 </script>
   <template>
@@ -89,8 +93,8 @@ function hideCompleted(type, index) {
     <ul class="current-todos">
       <li class="current-list" v-for="(todo, index) in todos" :key="todo.id">
         <input class="list-checkbox" type="checkbox" @click="hideCompleted('need', index)" />
-        {{  todo.text  }}
-        {{  moment(todo.deadline - todo.startTime).format("mm")  }}m
+        {{ todo.text }}
+        {{ moment(todo.deadline - todo.startTime).format("mm") }}m
         <button @click="removeTodo('need', todo)">X</button>
       </li>
     </ul>
@@ -100,8 +104,8 @@ function hideCompleted(type, index) {
     <ul class="completed-todos">
       <li class="completed-list" v-for="(todo, index) in completedTodos" :key="todo.id">
         <input type="checkbox" checked @click="hideCompleted('completed', index)" />
-        {{  todo.text  }}
-        {{  moment(todo.deadline - todo.startTime).format("mm")  }}m
+        {{ todo.text }}
+        {{ moment(todo.deadline - todo.startTime).format("mm") }}m
         <button @click="removeTodo('completed', todo)">X</button>
       </li>
     </ul>

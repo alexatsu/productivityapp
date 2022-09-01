@@ -1,7 +1,9 @@
 <script setup>
 import Todo from './components/Todo.vue';
+import progressBar from './components/progressBar/progressBar.vue';
 import { ref, computed } from 'vue';
-import { useCounter } from './composables/timerUpdate.js'
+import { useCounter } from '../src/functions/timerUpdate'
+ import { useProgressBar } from './hooks/useProgressBar'
 //fontawesome imports |
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -20,6 +22,8 @@ library.add(
   faMoon)
 //fontawesome imports |
 
+const {start, setDuration} = useProgressBar();
+
 let timerRunning;
 let btnToggle = ref(true);
 // let whiteTheme = ref(true); white/dark theme setup later
@@ -30,10 +34,6 @@ const playButtonIcon = computed(() => {
   return btnToggle.value ? 'fa-play fa-solid' : 'fa-pause fa-solid'
 })
 
-// const whiteDarkTheme = computed(() => {
-//   return whiteTheme.value ? 
-// })
-
 function formatCode(secs) {
   const currentMinutes = Math.floor(secs / 60);
   const currentSeconds = secs % 60;
@@ -42,6 +42,8 @@ function formatCode(secs) {
 }
 
 function countdownStart() {
+  console.log('start')
+  start();
   if (btnToggle.value === true) { 
     btnToggle.value = false;
     clearInterval(timerRunning); // prevent timer from looping with a delay
@@ -53,7 +55,9 @@ function countdownStart() {
         countdownReset();
       }
     }, 1000)
+   // start();
   } else if (btnToggle.value === false) {
+  //  pause();
     btnToggle.value = true;
     clearInterval(timerRunning);
   }
@@ -64,24 +68,26 @@ function countdownReset() {
   display.value = ("00 : 00");
   clearInterval(timerRunning);
   btnToggle.value = true;
+ // reset();
 }
 
 function todoTimeEvent(secs) {
   seconds.value = secs;
   display.value = formatCode(seconds.value);
+  setDuration(secs * 1000);
 }
 
-
 const { counter, increment } = useCounter();
+
 </script>
 
 <template>
 
   <body>
     <header class="nav">
-      <button @click="increment()" >Counter: {{ counter }}</button>
       <span>Productivity App</span>
     </header>
+    <button @click="increment"> Count is {{ counter }}</button>
     <main class="main-app">
       <div class="white-dark">
         <div class="toggle-btn" id="_1st-toggle-btn">
@@ -92,6 +98,7 @@ const { counter, increment } = useCounter();
       <div class="countdown">
         <div class="round-border">
           <div class="timer-background">
+            <progressBar class="progressBar" />
             <span class="timer">{{ display }}</span>
             <div class="icons">
               <button class="icon1" @click="countdownStart()">
