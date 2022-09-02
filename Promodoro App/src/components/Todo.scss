@@ -17,11 +17,6 @@
       border: 0;
       outline: 0;
     }
-
-    input::placeholder {
-      color: red;
-      opacity: 1;
-    }
     .task-holder {
       @extend %inputs;
       border-top-left-radius: 10px;

@@ -67,7 +67,7 @@ body {
   padding: 1.5rem;
   display: flex;
   justify-content: center;
-  
+
   span {
     // font-size: 2.2rem;
     font-size: 5vw;
@@ -97,7 +97,7 @@ body {
   }
   .white-dark {
     position: relative;
-    
+
     .toggle-btn {
       position: absolute;
       width: 46px;
@@ -107,7 +107,7 @@ body {
       right: 7%;
       margin-top: 30px;
     }
-    
+
     input[type="checkbox"] {
       width: 100%;
       height: 100%;
@@ -122,9 +122,9 @@ body {
       z-index: 2;
       -webkit-tap-highlight-color: transparent;
     }
-    
+
     /* First toggle btn */
-    
+
     #_1st-toggle-btn span {
       position: absolute;
       top: 0px;
@@ -138,7 +138,7 @@ body {
       border-radius: 40px;
       transition: 0.2s ease background-color, 0.2s ease opacity;
     }
-    
+
     #_1st-toggle-btn span:before,
     #_1st-toggle-btn span:after {
       content: "";
@@ -149,32 +149,32 @@ body {
       border-radius: 50%;
       transition: 0.5s ease transform, 0.2s ease background-color;
     }
-    
+
     #_1st-toggle-btn span:before {
       background-color: #fff;
       transform: translate(-18px, 0px);
       z-index: 1;
     }
-    
+
     #_1st-toggle-btn span:after {
       background-color: rgb(44, 17, 46);
       transform: translate(7px, 0px);
       z-index: 0;
     }
-    
+
     #_1st-toggle-btn input[type="checkbox"]:checked + span {
       background-color: rgb(44, 17, 46);
     }
-    
+
     #_1st-toggle-btn input[type="checkbox"]:active + span {
       opacity: 0.5;
     }
-    
+
     #_1st-toggle-btn input[type="checkbox"]:checked + span:before {
       background-color: rgb(44, 17, 46);
       transform: translate(18px, -5px);
     }
-    
+
     #_1st-toggle-btn input[type="checkbox"]:checked + span:after {
       background-color: #fff;
       transform: translate(22px, 0px);
@@ -194,6 +194,7 @@ body {
     border-radius: 50%;
 
     .timer-background {
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -202,13 +203,11 @@ body {
       height: 250px;
       width: 250px;
       border-radius: 50%;
-      position: relative;
-      .progressBar {
-        position: absolute;
-      }
+      
+      
       .timer {
         color: black;
-        //color is temp, change to gradient later    
+        //color is temp, change to gradient later
         font-size: 2rem;
         font-family: f.$countdownFont;
       }
@@ -218,12 +217,12 @@ body {
   .icons {
     display: flex;
     margin-bottom: -30px;
-    button.icon1  {
-      @include c.buttonStyles(-45deg)
+    button.icon1 {
+      @include c.buttonStyles(-45deg);
     }
 
     button.icon2 {
-      @include c.buttonStyles(45deg)
+      @include c.buttonStyles(45deg);
     }
 
     button:hover {
@@ -241,3 +240,14 @@ body {
     }
   }
 }
+
+
+#container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 240px;
+        height: 240px;
+        pointer-events: none;
+      }

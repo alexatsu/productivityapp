@@ -2,46 +2,54 @@ import { onMounted, ref } from "vue";
 import ProgressBar from "progressbar.js";
 
 const bar = ref<any>(null);
+const dot = ref<any>(null);
 const container = ref(null);
 const duration = ref(1000);
 
 export function useProgressBar() {
   onMounted(() => {
-      bar.value = new ProgressBar.Circle(container.value, {
-        strokeWidth: 4,
-        easing: "linear",
-        duration: duration.value,
-        color: "url(#gradient)",
-        trailColor: "transparent",
-        svgStyle: null,
-      });
-
-    let linearGradient = `
-    <defs>
+    bar.value = new ProgressBar.Circle(container.value, {
+      strokeWidth: 4,
+      easing: "linear",
+      duration: duration.value,
+      color: "url(#gradient)",
+      trailColor: "transparent",
+      svgStyle: null,
+    });
+    let linearGradient = `<defs>
       <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%" gradientUnits="userSpaceOnUse">
         <stop offset="25%" stop-color="hsl(230, 74%, 62%)"/>
         <stop offset="50%" stop-color="hsl(284, 46%, 49%)"/>
         <stop offset="75%" stop-color="hsl(338, 100%, 60%)"/>
       </linearGradient>
-    </defs>
-        `;
+    </defs>`;
     bar.value.svg.insertAdjacentHTML("afterBegin", linearGradient);
+    bar.value.path.setAttribute('stroke-linecap', 'round');
   });
 
-  const start = () => {bar.value.animate(1.0)}
-  const pause = () => {bar.value.stop()}  
-  const reset = () => {bar.value.set(0)}
-  const resume = () => {bar.value.animate(1.0)}
+  const start = () => {
+    bar.value.animate(1.0);
+    dot.value.animate(1.0);
+    // bar.set(-1);
+    // bar.animate(0, function() { bar.animate(0); })
+  };
+  const pause = () => {
+    bar.value.stop();
+    dot.value.stop();
+  };
+  const reset = () => {
+    bar.value.set(0);
+    dot.value.set(0);
+  };
   const setDuration = (time: number) => {
-    duration.value = time
-  }
+    duration.value = time;
+  };
 
   return {
     container,
     setDuration,
     start,
     pause,
-    reset,
-    resume,
-  }
+    reset
+  };
 }
