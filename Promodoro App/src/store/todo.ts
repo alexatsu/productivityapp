@@ -22,9 +22,9 @@ type Store = {
   fieldErrors: Record<keyof TodoForm, string | null>;
   readTodosFromLocalStorage: () => void;
   addTodo: (todoForm: TodoForm) => void;
-  removeTodo: (todoId: Pick<Todo, "id">) => void;
-  toggleTodo: (todoId: Pick<Todo, "id">) => void;
-  updateTodo: (todoId: Pick<Todo, "id">, newText: Pick<Todo, "text">) => void;
+  removeTodo: (todoId: string) => void;
+  toggleTodo: (todoId: string) => void;
+  updateTodo: (todoId: string, newText: string) => void;
   getCompletedTodos(): Array<Todo>;
   getUncompletedTodos(): Array<Todo>;
 };
@@ -56,17 +56,17 @@ export const store = reactive<Store>({
     });
     todoLocalStorate.setTodos(this.todos);
   },
-  removeTodo(todoId: Pick<Todo, "id">) {
+  removeTodo(todoId: string) {
     this.todos = this.todos.filter(({ id }) => id !== todoId);
     todoLocalStorate.setTodos(this.todos);
   },
-  toggleTodo(todoId: Pick<Todo, "id">) {
+  toggleTodo(todoId: string) {
     this.todos = this.todos.map((todo) =>
       todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
     );
     todoLocalStorate.setTodos(this.todos);
   },
-  updateTodo(todoId: Pick<Todo, "id">, newText: Pick<Todo, "text">) {
+  updateTodo(todoId: string, newText: string) {
     this.todos = this.todos.map((todo) =>
       todo.id === todoId ? { ...todo, text: newText } : todo
     );

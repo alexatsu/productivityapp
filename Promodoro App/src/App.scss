@@ -243,11 +243,11 @@ body {
 
 
 #container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 240px;
-        height: 240px;
-        pointer-events: none;
-      }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 240px;
+  height: 240px;
+  pointer-events: none;
+}

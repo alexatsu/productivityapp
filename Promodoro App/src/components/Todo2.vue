@@ -2,6 +2,7 @@
 import {TodoForm} from '../types/todo'
 import {ref, onMounted} from 'vue'
 import {store} from '../store/todo'
+import moment from 'moment'
 
 const todoForm = ref<TodoForm>({
  todoStartTime: "1",
@@ -27,22 +28,22 @@ onMounted(() => {
     </form>
 
     <ul class="current-todos">
-      <li class="current-list" v-for="(todo, index) in getUncompletedTodos()" :key="todo.id">
+      <li class="current-list" v-for="(todo) in getUncompletedTodos()" :key="todo.id">
         <input class="list-checkbox" type="checkbox" @click="toggleTodo(todo.id)" />
         {{ todo.text }}
-        {{ moment(todo.deadline - todo.startTime).format("mm") }}m
-        <button @click="removeTodo('need', todo)">X</button>
+        {{ moment(todo.deadline - todo.startTime).format("mm") }}
+        <button @click="removeTodo(todo.id)">X</button>
       </li>
     </ul>
 
     <span class="completed">Completed</span>
 
     <ul class="completed-todos">
-      <li class="completed-list" v-for="(todo, index) in getCompletedTodos()" :key="todo.id">
-        <input type="checkbox" checked @click="hideCompleted('completed', index)" />
+      <li class="completed-list" v-for="(todo) in getCompletedTodos()" :key="todo.id">
+        <input type="checkbox" checked @click="toggleTodo(todo.id)" />
         {{ todo.text }}
         {{ moment(todo.deadline - todo.startTime).format("mm") }}m
-        <button @click="removeTodo('completed', todo)">X</button>
+        <button @click="removeTodo(todo.id)">X</button>
       </li>
     </ul>
 

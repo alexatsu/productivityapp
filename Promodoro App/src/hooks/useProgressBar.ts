@@ -2,9 +2,9 @@ import { onMounted, ref } from "vue";
 import ProgressBar from "progressbar.js";
 
 const bar = ref<any>(null);
-const dot = ref<any>(null);
 const container = ref(null);
-const duration = ref(1000);
+const duration = ref(0);
+let x = ref(-1);
 
 export function useProgressBar() {
   onMounted(() => {
@@ -23,33 +23,63 @@ export function useProgressBar() {
         <stop offset="75%" stop-color="hsl(338, 100%, 60%)"/>
       </linearGradient>
     </defs>`;
+    // const dot = `
+    // <div style="width: 240px;
+    //   height: 240px;
+    //   display: block;
+    //   position: absolute;
+    //   top: 0;
+    //   left: 0;
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: center;
+    //   background-color: red;
+    //   transform: rotate(50deg)">
+    //   <div style="width: 120px;
+    //     height: 120px;
+    //     background-color: white;
+    //     display: block;
+    //     position: relative;>
+    //     <div style="width: 4px;
+    //       height: 4px;
+    //       background-color: #000;
+    //       display: block;
+    //       position: relative;
+    //       top: 0;
+    //       border-radius: 2px;">
+    //     </div>
+    //   </div>
+    // </div>`
+    // bar.value.svg.insertAdjacentHTML("afterEnd", dot);
     bar.value.svg.insertAdjacentHTML("afterBegin", linearGradient);
-    bar.value.path.setAttribute('stroke-linecap', 'round');
+    bar.value.path.setAttribute("stroke-linecap", "round");
   });
-
-  const start = () => {
-    bar.value.animate(1.0);
-    dot.value.animate(1.0);
-    // bar.set(-1);
-    // bar.animate(0, function() { bar.animate(0); })
+  const progressBarStart = () => {
+    bar.value.set(x.value);
+    bar.value.animate(0);
+    // bar.value.animate(1);
   };
-  const pause = () => {
-    bar.value.stop();
-    dot.value.stop();
+  const progressBarUpdate = () => {
+    x.value = bar.value;
   };
-  const reset = () => {
+  const progressBarPause = () => {
+    x.value = bar.value;
+    bar.value.set();
+  };
+  const progressBarReset = () => {
     bar.value.set(0);
-    dot.value.set(0);
+    x.value = -1;
   };
-  const setDuration = (time: number) => {
+  const progressBarDuration = (time: number) => {
     duration.value = time;
   };
 
   return {
     container,
-    setDuration,
-    start,
-    pause,
-    reset
+    progressBarDuration,
+    progressBarStart,
+    progressBarPause,
+    progressBarReset,
+    progressBarUpdate
   };
 }

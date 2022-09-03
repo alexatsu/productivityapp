@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// import { useProgressBar } from '../hooks/useProgressBar'
 
 const newTodo = ref('');
 const newTodoTime = ref(1);
@@ -9,18 +10,22 @@ const newTodoTime = ref(1);
 const todos = ref([]);
 const completedTodos = ref([]);
 
+// const { progressBarReset } = useProgressBar();
 const emits = defineEmits(['testEvent']);
 
 function todoUpdateTime(todo) {
   emits('testEvent', Math.floor((todo.deadline - todo.startTime) / 1000));
+}
+function resetTodoTime() {
+  emits('testEvent', 0);
 }
 
 onMounted(() => {
   todos.value = JSON.parse(localStorage?.getItem('todos')) ?? [];
   if (todos.value.length === 1) {
     todoUpdateTime(todos.value[0]);
-  } 
-  retrieveTodosFromLocalStorage() 
+  }
+  retrieveTodosFromLocalStorage()
 })
 
 function addTodo() {
@@ -48,8 +53,12 @@ function removeTodo(type, remove) {
     localStorage.setItem('completed-todos', JSON.stringify(completedTodos.value))
   }
   localStorage.setItem('todos', JSON.stringify(todos.value));
+  console.log(todos.value.length);
   if (todos.value.length > 0) {
     todoUpdateTime(todos.value[0]);
+  } else if (todos.value.length === 0) {
+    resetTodoTime();
+    // progressBarReset();
   }
 }
 
@@ -57,7 +66,6 @@ function hideCompleted(type, index) {
   if (type === 'need') {
     const completed = todos.value.splice(index, 1);
     completedTodos.value.push(...completed);
-    console.log(completed);
   } else {
     const notCompleted = completedTodos.value.splice(index, 1);
     todos.value.push(...notCompleted);
@@ -65,16 +73,20 @@ function hideCompleted(type, index) {
 
   localStorage.setItem('todos', JSON.stringify(todos.value));
   localStorage.setItem('completed-todos', JSON.stringify(completedTodos.value))
-  
+
   if (todos.value.length > 0) {
     todoUpdateTime(todos.value[0]);
   }
+  else if (todos.value.length === 0) {
+    resetTodoTime();
+  }
 }
+
 function retrieveTodosFromLocalStorage() {
-    const localCompletedTodos = JSON.parse(localStorage.getItem('completed-todos'))
-    if (Array.isArray(localCompletedTodos) && localCompletedTodos.length) {
-        completedTodos.value = localCompletedTodos
-    }
+  const localCompletedTodos = JSON.parse(localStorage.getItem('completed-todos'))
+  if (Array.isArray(localCompletedTodos) && localCompletedTodos.length) {
+    completedTodos.value = localCompletedTodos
+  }
 }
 
 

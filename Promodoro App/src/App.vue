@@ -1,5 +1,6 @@
 <script setup>
 import Todo from './components/Todo.vue';
+import Todo2 from './components/Todo2.vue';
 import { ref, computed } from 'vue';
 import { useProgressBar } from './hooks/useProgressBar'
 //fontawesome imports |
@@ -20,13 +21,19 @@ library.add(
   faMoon)
 //fontawesome imports |
 
-const { start, pause, reset, setDuration, container } = useProgressBar();
+const { progressBarStart,
+        progressBarPause,
+        progressBarReset, 
+        progressBarDuration,
+        progressBarUpdate,
+        container } = useProgressBar();
 
 let timerRunning;
 let btnToggle = ref(true);
 // let whiteTheme = ref(true); white/dark theme setup later
 const seconds = ref(0);
 const display = ref("00 : 00")
+let resetTimeToMinsInTodo = ref(0);
 
 const playButtonIcon = computed(() => {
   return btnToggle.value ? 'fa-play fa-solid' : 'fa-pause fa-solid'
@@ -40,7 +47,8 @@ function formatCode(secs) {
 }
 
 function countdownStart() {
-  start();
+  progressBarStart();
+  progressBarUpdate();
   if (btnToggle.value === true) {
     btnToggle.value = false;
     clearInterval(timerRunning); // prevent timer from looping with a delay
@@ -53,24 +61,25 @@ function countdownStart() {
       }
     }, 1000)
   } else if (btnToggle.value === false) {
-    pause();
-    btnToggle.value = true;
     clearInterval(timerRunning);
+    btnToggle.value = true;
+    progressBarPause();
   }
 }
 
 function countdownReset() {
-  seconds.value = 0;
-  display.value = ("00 : 00");
   clearInterval(timerRunning);
   btnToggle.value = true;
-  reset();
+  seconds.value = resetTimeToMinsInTodo.value;
+  display.value = formatCode(seconds.value);
+  progressBarReset();
 }
 
 function todoTimeEvent(secs) {
+  resetTimeToMinsInTodo.value = secs;
   seconds.value = secs;
   display.value = formatCode(seconds.value);
-  setDuration(secs * 1000);
+  progressBarDuration(secs * 1000);
 }
 
 </script>
@@ -104,7 +113,9 @@ function todoTimeEvent(secs) {
           </div>
         </div>
       </div>
-      <Todo @testEvent="todoTimeEvent" />
+      <Todo 
+      @testEvent="todoTimeEvent"/>
+      <Todo/>
     </main>
     <footer>
       <span>Some links</span>
