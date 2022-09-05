@@ -2,17 +2,14 @@
 import { ref, onMounted } from 'vue'
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import { useProgressBar } from '../hooks/useProgressBar'
 
 const newTodo = ref('');
 const newTodoTime = ref(1);
-
 const todos = ref([]);
 const completedTodos = ref([]);
 
-// const { progressBarReset } = useProgressBar();
-const emits = defineEmits(['testEvent']);
 
+const emits = defineEmits(['testEvent']);
 function todoUpdateTime(todo) {
   emits('testEvent', Math.floor((todo.deadline - todo.startTime) / 1000));
 }
@@ -22,7 +19,7 @@ function resetTodoTime() {
 
 onMounted(() => {
   todos.value = JSON.parse(localStorage?.getItem('todos')) ?? [];
-  if (todos.value.length === 1) {
+  if (todos.value.length >= 1) {
     todoUpdateTime(todos.value[0]);
   }
   retrieveTodosFromLocalStorage()
@@ -30,18 +27,19 @@ onMounted(() => {
 
 function addTodo() {
   const dataNow = Date.now();
-  const deadline = dataNow + newTodoTime.value * 1000 * 60;
+  const deadlineTD = dataNow + newTodoTime.value * 1000 * 60;
   todos.value.push({
     id: Date.now().toString(36) + Math.random().toString(36).slice(2),
-    text: newTodo.value,
+    text: newTodo.value, 
     startTime: dataNow,
-    deadline: deadline
+    deadline: deadlineTD,
   });
   newTodo.value = '';
   localStorage.setItem('todos', JSON.stringify(todos.value));
   if (todos.value.length === 1) {
     todoUpdateTime(todos.value[0]);
   }
+
 }
 
 function removeTodo(type, remove) {
@@ -53,12 +51,12 @@ function removeTodo(type, remove) {
     localStorage.setItem('completed-todos', JSON.stringify(completedTodos.value))
   }
   localStorage.setItem('todos', JSON.stringify(todos.value));
-  console.log(todos.value.length);
+
   if (todos.value.length > 0) {
     todoUpdateTime(todos.value[0]);
-  } else if (todos.value.length === 0) {
+  } 
+  else if (todos.value.length === 0) {
     resetTodoTime();
-    // progressBarReset();
   }
 }
 
@@ -89,12 +87,11 @@ function retrieveTodosFromLocalStorage() {
   }
 }
 
-
 </script>
   <template>
   <div class="todo-section">
 
-    <form class="todo-form" @submit.prevent="addTodo()">
+    <form class="todo-form test" @submit.prevent="addTodo()">
       <input class="task-holder" v-model="newTodo" placeholder="Tasks" required />
       <input class="task-number" v-model="newTodoTime" type="number" min="1" max="60" required />
       <button class="task-btn">
@@ -103,8 +100,12 @@ function retrieveTodosFromLocalStorage() {
     </form>
 
     <ul class="current-todos">
-      <li class="current-list" v-for="(todo, index) in todos" :key="todo.id">
-        <input class="list-checkbox" type="checkbox" @click="hideCompleted('need', index)" />
+      <li class="current-list checkbox" v-for="(todo, index) in todos" :key="todo.id">
+        <input class="list-checkbox" type="checkbox" />
+        <label for="check">
+          <span @click="hideCompleted('need', index)" >
+          </span>
+        </label>
         {{ todo.text }}
         {{ moment(todo.deadline - todo.startTime).format("mm") }}m
         <button @click="removeTodo('need', todo)">X</button>
@@ -112,18 +113,22 @@ function retrieveTodosFromLocalStorage() {
     </ul>
 
     <span class="completed">Completed</span>
-
+    
     <ul class="completed-todos">
-      <li class="completed-list" v-for="(todo, index) in completedTodos" :key="todo.id">
-        <input type="checkbox" checked @click="hideCompleted('completed', index)" />
+      <li class="completed-list checkbox" v-for="(todo, index) in completedTodos" :key="todo.id">
+        <input type="checkbox" checked />
+        <label for="check">
+          <span @click="hideCompleted('completed', index)" >
+          </span>
+        </label>
         {{ todo.text }}
         {{ moment(todo.deadline - todo.startTime).format("mm") }}m
         <button @click="removeTodo('completed', todo)">X</button>
       </li>
     </ul>
-
   </div>
 </template>
   <style scoped lang='scss'>
   @use '../components/Todo.scss';
+  @use "../src/scss/checkbox.scss";
   </style>

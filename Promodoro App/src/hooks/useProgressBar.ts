@@ -3,10 +3,11 @@ import ProgressBar from "progressbar.js";
 
 const bar = ref<any>(null);
 const container = ref(null);
-const duration = ref(0);
+let duration = ref(0);
 let x = ref(-1);
 
 export function useProgressBar() {
+
   onMounted(() => {
     bar.value = new ProgressBar.Circle(container.value, {
       strokeWidth: 4,
@@ -83,3 +84,4 @@ export function useProgressBar() {
     progressBarUpdate
   };
 }
+

@@ -23,4 +23,7 @@ $Lpink: hsl(338, 100%, 60%);
       border: none;
       border-radius: 15px;
       min-width: 45px;
+      @media (max-width: 700px) {
+        min-width: 30px;
+      }
 }

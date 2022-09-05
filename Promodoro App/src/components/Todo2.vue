@@ -9,7 +9,17 @@ const todoForm = ref<TodoForm>({
  todoText: ""
 })
 
-const {todos, addTodo, toggleTodo, removeTodo, updateTodo, readTodosFromLocalStorage, fieldErrors, getCompletedTodos, getUncompletedTodos } = store;
+const {
+  todos,
+  addTodo,
+  toggleTodo,
+  removeTodo,
+  updateTodo,
+  readTodosFromLocalStorage,
+  fieldErrors,
+  getCompletedTodos,
+  getUncompletedTodos
+} = store;
 
 onMounted(() => {
   readTodosFromLocalStorage();
