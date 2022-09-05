@@ -13,7 +13,6 @@ import {
   faChevronDown,
   faMoon
 } from '@fortawesome/free-solid-svg-icons'
-import { duration } from 'moment';
 library.add(
   faPlay,
   faPause,
@@ -85,22 +84,6 @@ function todoTimeEvent(secs) {
   progressBarDuration(secs * 1000);
 }
 
-// const progressBarValue = computed(() => {
-//   const from = 602.518;
-//   const to = 301.635;
-
-//   const intervalPercent = (from - to);
-//   // const maxTime = 60;
-//   const maxTime = newTodoTime.value * 60;
-//   const currentTime = seconds.value;
-
-//   const percent =  currentTime / maxTime;
-
-//   const progressBarPercent = percent * intervalPercent;
-
-//   return from - progressBarPercent;
-// });
-
 </script>
 
 <template>
@@ -121,33 +104,7 @@ function todoTimeEvent(secs) {
           <div class="round-border">
             <div class="timer-background">
               <div ref="container" id="container"></div> <!-- ref is like creating an id (getelemenbyID) -->
-              <!-- <div id="container">
-                <svg viewBox="0 0 100 100">
-                  <defs>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%" gradientUnits="userSpaceOnUse">
-                      <stop offset="25%" stop-color="hsl(230, 74%, 62%)"></stop>
-                      <stop offset="50%" stop-color="hsl(284, 46%, 49%)"></stop>
-                      <stop offset="75%" stop-color="hsl(338, 100%, 60%)"></stop>
-                    </linearGradient>
-                  </defs>
-                  <path
-                  d="M 50,50 m 0,-48 a 48,48 0 1 1 0,96 a 48,48 0 1 1 0,-96"
-                  stroke="transparent"
-                  stroke-width="4"
-                  fill-opacity="0">
-                  </path>
-                  <path
-                  d="M 50,50 m 0,-48 a 48,48 0 1 1 0,96 a 48,48 0 1 1 0,-96"
-                  stroke="url(#gradient)"
-                  stroke-width="4"
-                  fill-opacity="0"
-                  stroke-linecap="round"
-                  :style="{ strokeDasharray: '301.635, 301.635', strokeDashoffset: progressBarValue }"
-                  >
-                </path>
-              </svg>
-              <div ></div>
-            </div> -->
+              
 
               <span class="timer">{{ display }}</span>
               <div class="icons">
