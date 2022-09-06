@@ -7,7 +7,9 @@ $Lgrayish-blue: hsla(199, 75%, 56%, 0.534);
 $Lblue: hsl(230, 74%, 62%);
 $Lpurple: hsl(284, 46%, 49%);
 $Lpink: hsl(338, 100%, 60%);
+// sort colors and divide them into section (e.g Primary, secondary, utils)
 
+// remove mixins into separate file
 @mixin buttonStyles($direction) {
     background-image: linear-gradient(
         $direction,

@@ -3,7 +3,6 @@ import Todo from './components/Todo.vue';
 // import Todo2 from './components/Todo2.vue';
 import { ref, computed } from 'vue';
 import { useProgressBar } from './hooks/useProgressBar'
-//fontawesome imports |
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
@@ -35,7 +34,7 @@ let btnToggle = ref(true);
 
 const seconds = ref(0);
 const display = ref("00 : 00")
-let resetTimeToMinsInTodo = ref(0);
+let resetMinsTodo = ref(0);
 
 const playButtonIcon = computed(() => {
   return btnToggle.value ? 'fa-play fa-solid' : 'fa-pause fa-solid'
@@ -72,29 +71,33 @@ function countdownStart() {
 function countdownReset() {
   clearInterval(timerRunning);
   btnToggle.value = true;
-  seconds.value = resetTimeToMinsInTodo.value;
+  seconds.value = resetMinsTodo.value;
   display.value = formatCode(seconds.value);
   progressBarReset();
 }
 
 function todoTimeEvent(secs) {
-  resetTimeToMinsInTodo.value = secs;
+  resetMinsTodo.value = secs;
   seconds.value = secs;
   display.value = formatCode(seconds.value);
   progressBarDuration(secs * 1000);
 }
 
+// let i = ref(0);
+// function increment() {
+//   i.value++;
+// }
+
 </script>
 
 <template>
-
   <body>
     <header class="nav">
       <span>Productivity App</span>
     </header>
     <div class="app">
       <main class="main-app">
-        <div class="white-dark">
+        <div class="white-dark-toggle">
           <div class="toggle-btn" id="_1st-toggle-btn">
             <input type="checkbox">
             <span></span>
@@ -104,8 +107,6 @@ function todoTimeEvent(secs) {
           <div class="round-border">
             <div class="timer-background">
               <div ref="container" id="container"></div> <!-- ref is like creating an id (getelemenbyID) -->
-              
-
               <span class="timer">{{ display }}</span>
               <div class="icons">
                 <button class="icon1" @click="countdownStart()">
@@ -119,16 +120,19 @@ function todoTimeEvent(secs) {
           </div>
         </div>
       </main>
-      <Todo @testEvent="todoTimeEvent" />
+      <Todo
+      @reset-time-on-remove+check="countdownReset"
+      @test-event="todoTimeEvent" />
+      <!-- <Todo @counter-update="increment"  
+      :counter="i" /> -->
       <footer>
         <span>Some links</span>
       </footer>
     </div>
   </body>
-
 </template>
 
 <style scoped lang="scss">
-@use "../src/App.scss";
+  @use "../src/App.scss";
 </style>
 

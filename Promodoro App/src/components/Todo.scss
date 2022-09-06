@@ -1,10 +1,10 @@
 @use "../scss/colors.scss" as c;
 @use "../scss/fonts.scss" as f;
-
+@use "../scss/scss-components/checkbox.scss" as ch;
 
 .todo-section {
   background-color: rgba(253, 253, 253, 0.185);
-  max-height: 26vh;
+  max-height: 30vh;
   width: 45vh;
   border-radius: 10px;
   padding-top: 30px;
@@ -22,6 +22,7 @@
   .todo-form {
     margin: auto;
     display: flex;
+    align-items: center;
     justify-content: center;
     padding-bottom: 10px;
     //inputs extends/mixin for reusability
@@ -31,24 +32,37 @@
       border: 0;
       outline: 0;
     }
+    %input-focus {
+      transition: background-color 0.3s;
+      &:focus {
+        background: hsla(284, 100%, 84%, 0.728);
+      }
+    }
+    //inputs-focus extends/mixin for reusability
     .task-holder {
       @extend %inputs;
-      border-top-left-radius: 10px;
-      border-bottom-left-radius: 10px;
+      @extend %input-focus;
+      border-radius: 7px;
       padding-left: 10px;
+      max-width: 180px
     }
 
     .task-number {
       @extend %inputs;
-      border-bottom-right-radius: 10px;
-      border-top-right-radius: 10px;
+      @extend %input-focus;
+      border-bottom-right-radius: 7px;
+      border-top-right-radius: 7px;
     }
 
     .task-btn {
       @extend %inputs;
-      border-radius: 10px;
+      border-radius: 7px;
       width: 40px;
-      margin-left: 15px;
+      margin-left: 0px;
+      transition: background-color 0.3s;
+      &:hover {
+        background: hsla(284, 100%, 84%, 0.728);
+      }
     }
   }
 
@@ -56,6 +70,7 @@
     display: flex;
     justify-content: flex-start;
     padding-left: 20px;
+    padding-bottom: 5px;
   }
 
   .current-todos,
@@ -73,22 +88,56 @@
         hsla(338, 100%, 57%, 0.621),
         hsla(237, 88%, 32%, 0.537)
       );
+      font-size: 0.8rem;
       box-shadow: 0 0 15px 1px rgba(176, 176, 176, 0.573);
       display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
       align-items: center;
       list-style: none;
       border-radius: 10px;
       margin-bottom: 10px;
+      padding: 6px 16px 4px 8px;
       min-height: 40px;
-      min-width: 300px;
-
+      min-width: 200px;
       color: hsla(0, 0%, 100%, 0.925);
-
-      //   still in progress
-      //       max width, max height, wrap, and so on
-    
+      position: relative;
+      word-break: break-word;
+      &:hover button {
+        color: rgb(255, 255, 255);
+      }
+      label {
+        margin-left: -5px;
+        margin-right: -5px;
+      }
+      button {
+        position: absolute;
+        top: 2px;
+        right: 5px;
+        border: 0;
+        background-color: transparent;
+        color: transparent;
+        font-size: 0.6rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: color 0.5s;
+        &:hover {
+          color: rgb(255, 34, 86);
+        }
+      }
+      .mins {
+        position: absolute;
+        bottom: 6px;
+        right: 5px;
+        font-size: 0.8rem;
+        font-family: f.$minsFont;
+        color: hsla(0, 0%, 100%, 0.482);
+        transition: color 0.5s;
+      }
+      &:hover .mins {
+        color: hsla(0, 0%, 100%, 0.916);
+      }
+      //removed styles into separate file checkbox.scss
+      @extend %checkbox;
+      //     
     }
   }
 }
