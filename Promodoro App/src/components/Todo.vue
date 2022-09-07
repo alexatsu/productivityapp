@@ -1,10 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { nanoid } from 'nanoid';
 import moment from 'moment'
 
+let chevron = ref(true);
 const newTodo = ref('');
 const newTodoTime = ref(1);
+
 const todos = ref([]);
 const completedTodos = ref([]);
 
@@ -41,7 +44,7 @@ function addTodo() {
   const dataNow = Date.now();
   const deadlineTD = dataNow + newTodoTime.value * 1000 * 60;
   todos.value.push({
-    id: Date.now().toString(36) + Math.random().toString(36).slice(2),
+    id: nanoid(),
     text: newTodo.value,
     startTime: dataNow,
     deadline: deadlineTD,
@@ -112,6 +115,16 @@ function incrementInputNumber() {
   }
 }
 
+const rotated = ref("45deg");
+function chevronRotate() {
+  if (rotated.value === "45deg") {
+    rotated.value = "-90deg";
+    console.log(rotated.value)
+  } else {
+    rotated.value = "45deg";
+  }
+  return chevron.value === true ? chevron.value = false : chevron.value = true;
+}
 </script>
 <template>
   <div class="todo-section">
@@ -119,12 +132,12 @@ function incrementInputNumber() {
     <form class="todo-form" @submit.prevent="addTodo()">
       <input class="task-holder" v-model="newTodo" placeholder="add..." required />
       <div class="number-input">
-        <span class="minus" @click="decrementInputNumber()" ></span>
-        <input type="number" class="inp-num" min="1" max="60" v-model="newTodoTime" >
+        <span class="minus" @click="decrementInputNumber()"></span>
+        <input type="number" class="inp-num" min="1" max="60" v-model="newTodoTime">
         <span class="plus" @click="incrementInputNumber()"></span>
       </div>
       <button class="task-btn">
-        <span class="chevron">
+        <span class="chevron" >
           <font-awesome-icon icon="fa-solid fa-chevron-down" style="color: black;" />
         </span>
       </button>
@@ -149,9 +162,23 @@ function incrementInputNumber() {
       </li>
     </ul>
 
-    <span class="completed">Completed</span>
+    <div class="divider-between-lists">
+      <!-- <span class="chevron" >
+        <font-awesome-icon icon="fa-solid fa-chevron-down" style="color: black;"
+        @click="chevronRotate()"
+        :class="{ rotated: chevron }"
+        class="chevron-rotated" />
+      </span> -->
+      <span class="chevron" >
+        <font-awesome-icon icon="fa-solid fa-chevron-down" style="color: black;"
+        @click="chevronRotate()"
+        :style="{ rotated }"
+        class="chevron-rotated" />
+      </span>
+      <span class="completed">Completed</span>
+    </div>
 
-    <ul class="completed-todos">
+    <ul v-if="!chevron" class="completed-todos">
       <li class="completed-list" v-for="(todo, index) in completedTodos" :key="todo.id">
         <div class="checkbox">
           <input type="checkbox" checked />
@@ -170,7 +197,7 @@ function incrementInputNumber() {
       </li>
     </ul>
   </div>
- 
+
   <!-- <button @click="increment()"> Counter is {{ prop.counter }} </button> -->
 </template>
 <style scoped lang='scss'>

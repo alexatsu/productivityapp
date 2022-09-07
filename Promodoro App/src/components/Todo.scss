@@ -25,6 +25,7 @@
     align-items: center;
     justify-content: center;
     padding-bottom: 10px;
+    margin-top: -15px;
     //inputs extends/mixin for reusability
     %inputs {
       background: hsla(284, 100%, 84%, 0.201);
@@ -44,7 +45,7 @@
       @extend %input-focus;
       border-radius: 7px;
       padding-left: 10px;
-      max-width: 180px
+      max-width: 180px;
     }
 
     .task-number {
@@ -66,11 +67,27 @@
     }
   }
 
-  .completed {
+  .divider-between-lists {
     display: flex;
-    justify-content: flex-start;
-    padding-left: 20px;
-    padding-bottom: 5px;
+    flex-direction: row;
+    align-items: center;
+    .chevron {
+      padding-left: 10px;
+      font-size: 0.8rem;
+      .rotated {
+        // transition: transform 0.3s linear;
+        // transform: rotate(-90deg);
+      }
+      .chevron-rotated {
+        transition: transform 0.2s linear;
+      }
+    }
+    .completed {
+      display: flex;
+      justify-content: flex-start;
+      padding-left: 5px;
+      padding-bottom: 5px;
+    }
   }
 
   .current-todos,
@@ -137,7 +154,7 @@
       }
       //removed styles into separate file checkbox.scss
       @extend %checkbox;
-      //     
+      //
     }
   }
 }

@@ -1,6 +1,6 @@
 @use "./scss/colors.scss" as c;
 @use "./scss/fonts.scss" as f;
-@use "../src/scss/scss-components/white-dark-toggle.scss" as wdt;
+@use "../src/scss/scss-components/white-dark-theme-toggle.scss" as wdt;
 
 * {
   scroll-behavior: smooth;
@@ -48,20 +48,6 @@ body {
     100% {
       background-position: 0% 50%;
     }
-  }
-  %theme {
-    position: absolute;
-    top: 5%;
-    right: 5%;
-    border-radius: 10px;
-  }
-  .dark-theme {
-    color: rgb(0, 0, 0);
-    @extend %theme;
-  }
-  .white-theme {
-    color: rgb(255, 255, 255);
-    @extend %theme;
   }
 }
 
@@ -130,11 +116,22 @@ body {
         height: 235px;
         width: 235px;
         border-radius: 50%;
-        
+
+        //svg render
+        #container {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 240px;
+          height: 240px;
+          pointer-events: none;
+        }
+
         .timer {
           color: black;
-          //color is temp, change to gradient later
           font-size: 2rem;
+          font-weight: 00;
           font-family: f.$countdownFont;
           @media (max-width: 700px) {
             font-size: 1.7rem;
@@ -159,8 +156,7 @@ body {
         color: #fff;
         text-decoration: none;
       }
-  
-      .icon1 {
+      %icons {
         color: c.$Lpastel;
         @media (max-width: 700px) {
           font-size: 0.6rem;
@@ -169,25 +165,10 @@ body {
           cursor: pointer;
         }
       }
-  
-      .icon2 {
-        color: c.$Lpastel;
-        @media (max-width: 700px) {
-          font-size: 0.6rem;
-        }
-        &:hover {
-          cursor: pointer;
-        }
+      .icon1, .icon2 {
+        @extend %icons;
       }
     }
   }
 }
-#container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 240px;
-  height: 240px;
-  pointer-events: none;
-}
+
