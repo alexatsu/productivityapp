@@ -74,9 +74,10 @@
     .chevron {
       padding-left: 10px;
       font-size: 0.8rem;
+      transition: transform 0.2s linear;
       .rotated {
-        // transition: transform 0.3s linear;
-        // transform: rotate(-90deg);
+        transition: transform 0.3s linear;
+        transform: rotate(-90deg);
       }
       .chevron-rotated {
         transition: transform 0.2s linear;
@@ -105,7 +106,6 @@
         hsla(338, 100%, 57%, 0.621),
         hsla(237, 88%, 32%, 0.537)
       );
-      font-size: 0.8rem;
       box-shadow: 0 0 15px 1px rgba(176, 176, 176, 0.573);
       display: flex;
       align-items: center;
@@ -115,15 +115,28 @@
       padding: 6px 16px 4px 8px;
       min-height: 40px;
       min-width: 200px;
-      color: hsla(0, 0%, 100%, 0.925);
       position: relative;
-      word-break: break-word;
       &:hover button {
         color: rgb(255, 255, 255);
       }
+      //removed styles into separate file checkbox.scss
+      @extend %checkbox;
+      //
       label {
         margin-left: -5px;
         margin-right: -5px;
+      }
+      .mins {
+        position: absolute;
+        bottom: 6px;
+        right: 5px;
+        font-size: 0.8rem;
+        font-family: f.$minsFont;
+        color: hsla(0, 0%, 100%, 0.482);
+        transition: color 0.5s;
+      }
+      &:hover .mins {
+        color: hsla(0, 0%, 100%, 0.916);
       }
       button {
         position: absolute;
@@ -140,21 +153,24 @@
           color: rgb(255, 34, 86);
         }
       }
-      .mins {
-        position: absolute;
-        bottom: 6px;
-        right: 5px;
-        font-size: 0.8rem;
-        font-family: f.$minsFont;
-        color: hsla(0, 0%, 100%, 0.482);
-        transition: color 0.5s;
+      .text {
+        background-color: transparent;
+        border: transparent;
+        color: hsla(0, 0%, 100%, 0.925);
+        min-width: 235px;
+        word-break: break-word;
+        resize: none;
+        overflow-y: hidden;
+        overflow-y: scroll;
+        outline: none;
+        &::-webkit-scrollbar {
+          width: 0px;
+          background: transparent; /* make scrollbar transparent */
+        }
+        &:focus {
+          border: transparent;
+        }
       }
-      &:hover .mins {
-        color: hsla(0, 0%, 100%, 0.916);
-      }
-      //removed styles into separate file checkbox.scss
-      @extend %checkbox;
-      //
     }
   }
 }

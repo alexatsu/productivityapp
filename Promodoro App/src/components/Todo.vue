@@ -1,8 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { nanoid } from 'nanoid';
 import moment from 'moment'
+
 
 let chevron = ref(true);
 const newTodo = ref('');
@@ -10,7 +11,6 @@ const newTodoTime = ref(1);
 
 const todos = ref([]);
 const completedTodos = ref([]);
-
 // const prop = defineProps({
 //   counter: {
 //     required: true
@@ -32,17 +32,25 @@ function resetTodoTime() {
   emits('test-event', 0);
 }
 
-onMounted(() => {
+function retrieveTodosFromLocalStorage() {
+  completedTodos.value = JSON.parse(localStorage.getItem('completed-todos')) ?? [];
   todos.value = JSON.parse(localStorage?.getItem('todos')) ?? [];
   if (todos.value.length >= 1) {
     todoUpdateTime(todos.value[0]);
   }
+}
+onMounted(() => {
   retrieveTodosFromLocalStorage()
 })
 
 function addTodo() {
+  if (newTodo.value.trim() === '') {
+    return
+  } //check if text is empty => don't add todo
+
   const dataNow = Date.now();
   const deadlineTD = dataNow + newTodoTime.value * 1000 * 60;
+
   todos.value.push({
     id: nanoid(),
     text: newTodo.value,
@@ -57,14 +65,24 @@ function addTodo() {
     todoUpdateTime(todos.value[0]);
   }
 }
+//watching for changings in todos/completedTodos and updating localstorage
+watch(todos, newValue => {
+  localStorage.setItem('todos', JSON.stringify(newValue))
+},
+  { deep: true }); 
 
-function removeTodo(type, remove) {
+watch(completedTodos, newValue => {
+  localStorage.setItem('completed-todos', JSON.stringify(newValue))
+},
+{ deep: true });
+
+function removeTodo(type, removeTodo) {
   emits('reset-time-on-remove+check')
   if (type === "need") {
-    todos.value = todos.value.filter((todo) => todo !== remove);
+    todos.value = todos.value.filter((todo) => todo !== removeTodo);
   }
   else {
-    completedTodos.value = completedTodos.value.filter((todo) => todo !== remove);
+    completedTodos.value = completedTodos.value.filter((todo) => todo !== removeTodo);
     localStorage.setItem('completed-todos', JSON.stringify(completedTodos.value))
   }
   localStorage.setItem('todos', JSON.stringify(todos.value));
@@ -98,12 +116,6 @@ function checkCompleted(type, index) {
   }
 }
 
-function retrieveTodosFromLocalStorage() {
-  const localCompletedTodos = JSON.parse(localStorage.getItem('completed-todos'))
-  if (Array.isArray(localCompletedTodos) && localCompletedTodos.length) {
-    completedTodos.value = localCompletedTodos
-  }
-}
 function decrementInputNumber() {
   if (newTodoTime.value > 1) {
     newTodoTime.value--;
@@ -115,14 +127,7 @@ function incrementInputNumber() {
   }
 }
 
-const rotated = ref("45deg");
 function chevronRotate() {
-  if (rotated.value === "45deg") {
-    rotated.value = "-90deg";
-    console.log(rotated.value)
-  } else {
-    rotated.value = "45deg";
-  }
   return chevron.value === true ? chevron.value = false : chevron.value = true;
 }
 </script>
@@ -130,14 +135,14 @@ function chevronRotate() {
   <div class="todo-section">
 
     <form class="todo-form" @submit.prevent="addTodo()">
-      <input class="task-holder" v-model="newTodo" placeholder="add..." required />
+      <input class="task-holder" v-model="newTodo" placeholder="add..." />
       <div class="number-input">
         <span class="minus" @click="decrementInputNumber()"></span>
         <input type="number" class="inp-num" min="1" max="60" v-model="newTodoTime">
         <span class="plus" @click="incrementInputNumber()"></span>
       </div>
       <button class="task-btn">
-        <span class="chevron" >
+        <span class="chevron">
           <font-awesome-icon icon="fa-solid fa-chevron-down" style="color: black;" />
         </span>
       </button>
@@ -152,9 +157,10 @@ function chevronRotate() {
             </span>
           </label>
         </div>
-        <span class="text">
+        <!-- <span class="text">
           {{ todo.text }}
-        </span>
+        </span> -->
+        <textarea class="text" v-model="todo.text" rows="5" ></textarea>
         <span class="mins">
           {{ moment(todo.deadline - todo.startTime).format("mm") }}m
         </span>
@@ -163,17 +169,9 @@ function chevronRotate() {
     </ul>
 
     <div class="divider-between-lists">
-      <!-- <span class="chevron" >
-        <font-awesome-icon icon="fa-solid fa-chevron-down" style="color: black;"
-        @click="chevronRotate()"
-        :class="{ rotated: chevron }"
-        class="chevron-rotated" />
-      </span> -->
-      <span class="chevron" >
-        <font-awesome-icon icon="fa-solid fa-chevron-down" style="color: black;"
-        @click="chevronRotate()"
-        :style="{ rotated }"
-        class="chevron-rotated" />
+      <span class="chevron">
+        <font-awesome-icon icon="fa-solid fa-chevron-down" style="color: black;" @click="chevronRotate()"
+          :class="{ rotated: chevron }" class="chevron-rotated" />
       </span>
       <span class="completed">Completed</span>
     </div>
@@ -187,9 +185,10 @@ function chevronRotate() {
             </span>
           </label>
         </div>
-        <span class="text">
+        <!-- <span class="text">
           {{ todo.text }}
-        </span>
+        </span> -->
+        <input class="text" v-model="todo.text" />
         <span class="mins">
           {{ moment(todo.deadline - todo.startTime).format("mm") }}m
         </span>
