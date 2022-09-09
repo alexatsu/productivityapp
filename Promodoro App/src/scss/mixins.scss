@@ -1,0 +1,58 @@
+@use "./colors.scss" as c;
+
+@mixin buttonStyles($direction) {
+  background-image: linear-gradient(
+    $direction,
+    c.$Lgrayish-blue 0%,
+    c.$Lblue 25%,
+    c.$Lpurple 51%,
+    c.$Lpink 100%
+  );
+  margin: 10px;
+  padding: 5px;
+  transition: 0.5s;
+  background-size: 200% auto;
+  border: none;
+  border-radius: 15px;
+  min-width: 45px;
+  @media (max-width: 700px) {
+    min-width: 30px;
+  }
+}
+
+%background {
+  position: relative;
+  height: 100vh; //temporarily
+  font-size: 16px;
+  background-size: 300% 300%;
+  background-repeat: no-repeat;
+  -webkit-animation: AnimateBG 20s ease infinite;
+  animation: AnimateBG 20s ease infinite;
+  @-webkit-keyframes AnimateBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  @keyframes AnimateBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}
+%round-border {
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 50%;
+}

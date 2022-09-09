@@ -1,31 +1,26 @@
+
 // Primary colors
 $white: hsl(0, 0%, 100%);
 $black: hsl(0, 0%, 0%);
-$Lpastel: hsl(20, 86%, 95%);
+$fadedBlack: hsla(0, 0%, 0%, 0.1);
 $Dpurple: hsl(277, 95%, 15%);
+
 $Lgrayish-blue: hsla(199, 75%, 56%, 0.534);
 $Lblue: hsl(230, 74%, 62%);
+$Dblue: hsla(237, 88%, 32%, 0.537);
 $Lpurple: hsl(284, 46%, 49%);
 $Lpink: hsl(338, 100%, 60%);
-// sort colors and divide them into section (e.g Primary, secondary, utils)
+$Dpink: hsla(338, 100%, 57%, 0.621);
 
+// Secondary colors
+
+////Glass elements
+$Lpastel: hsl(20, 86%, 95%);
+$glassyGray: rgba(251, 251, 251, 0.1);
+$glassyGrayBorder: rgba(251, 251, 251, 0.251);
+////Inputs
+$fadedPurple: hsla(284, 100%, 84%, 0.201);
+$LfadedPurple: hsla(284, 100%, 84%, 0.728);
+//Shadows
+$Dshadow: rgba(176, 176, 176, 0.304);
 // remove mixins into separate file
-@mixin buttonStyles($direction) {
-    background-image: linear-gradient(
-        $direction,
-        $Lgrayish-blue 0%,
-        $Lblue 25%,
-        $Lpurple 51%,
-        $Lpink 100%
-      );
-      margin: 10px;
-      padding: 5px;
-      transition: 0.5s;
-      background-size: 200% auto;
-      border: none;
-      border-radius: 15px;
-      min-width: 45px;
-      @media (max-width: 700px) {
-        min-width: 30px;
-      }
-}

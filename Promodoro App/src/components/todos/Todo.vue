@@ -74,7 +74,7 @@ watch(todos, newValue => {
 watch(completedTodos, newValue => {
   localStorage.setItem('completed-todos', JSON.stringify(newValue))
 },
-{ deep: true });
+  { deep: true });
 
 function removeTodo(type, removeTodo) {
   emits('reset-time-on-remove+check')
@@ -157,10 +157,7 @@ function chevronRotate() {
             </span>
           </label>
         </div>
-        <!-- <span class="text">
-          {{ todo.text }}
-        </span> -->
-        <textarea class="text" v-model="todo.text" rows="5" ></textarea>
+        <textarea class="text" v-model="todo.text" rows="2"></textarea>
         <span class="mins">
           {{ moment(todo.deadline - todo.startTime).format("mm") }}m
         </span>
@@ -185,10 +182,7 @@ function chevronRotate() {
             </span>
           </label>
         </div>
-        <!-- <span class="text">
-          {{ todo.text }}
-        </span> -->
-        <input class="text" v-model="todo.text" />
+        <textarea class="text" v-model="todo.text" rows="2"></textarea>
         <span class="mins">
           {{ moment(todo.deadline - todo.startTime).format("mm") }}m
         </span>
@@ -200,6 +194,6 @@ function chevronRotate() {
   <!-- <button @click="increment()"> Counter is {{ prop.counter }} </button> -->
 </template>
 <style scoped lang='scss'>
-@use "../scss/scss-components/input-number.scss";
-@use '../components/Todo.scss';
+@use "../todos/inputNumber.scss";
+@use "../todos/checkbox.scss";
 </style>

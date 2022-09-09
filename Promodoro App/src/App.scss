@@ -1,54 +1,36 @@
 @use "./scss/colors.scss" as c;
 @use "./scss/fonts.scss" as f;
-@use "../src/scss/scss-components/white-dark-theme-toggle.scss" as wdt;
+@use "./scss/mixins.scss" as m;
 
 * {
   scroll-behavior: smooth;
   // outline: 1px red solid;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
-body {
-  position: relative;
-  height: 100vh; //temporarily
-  font-size: 16px;
-  background-size: 300% 300%;
-  background-repeat: no-repeat;
+.background {
   background-image: linear-gradient(
     -45deg,
-    hsl(199, 75%, 56%) 0%,
-    hsl(230, 74%, 62%) 25%,
-    hsl(284, 46%, 49%) 51%,
-    hsl(338, 100%, 60%) 100%
+    c.$Lgrayish-blue,
+    c.$Lblue,
+    c.$Lpurple,
+    c.$Lpink
   );
-  -webkit-animation: AnimateBG 20s ease infinite;
-  animation: AnimateBG 20s ease infinite;
-
-  @-webkit-keyframes AnimateBG {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  @keyframes AnimateBG {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
+  @extend %background; //mixins.scss
+}
+.background.dark {
+  background-image: linear-gradient(
+    -45deg,
+    hsla(199, 57%, 26%, 0.534),
+    hsl(230, 45%, 31%),
+    hsl(284, 45%, 28%),
+    hsl(338, 63%, 29%)
+  );
+  @extend %background; //mixins.scss
+}
+.dark.round-border {
+  margin-top: 300px;
+  padding: 20px;
+  border-radius: 50%;
 }
 
 .nav {
@@ -56,17 +38,16 @@ body {
   display: flex;
   justify-content: center;
 
-  span {
+  .header {
     font-size: 2.2rem;
-    // font-size: 5vw;
     font-family: f.$primaryFont;
     font-weight: 600;
     color: c.$Lpastel;
     text-shadow: 0 0 3px c.$Dpurple, 0 0 30px c.$Dpurple, 0 0 1px c.$Dpurple,
       0 0 1px c.$Dpurple;
-      @media (max-width: 700px) {
-        font-size: 1.4rem;
-      }
+    @media (max-width: 700px) {
+      font-size: 1.4rem;
+    }
   }
 }
 .app {
@@ -77,46 +58,41 @@ body {
   .main-app {
     width: 45vh;
     margin-bottom: 10px;
-    background: rgba(251, 251, 251, 0.1);
+    background: c.$glassyGray;
     border-radius: 10px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 30px c.$fadedBlack;
     backdrop-filter: blur(3.9px);
     -webkit-backdrop-filter: blur(3.9px);
-    border: 1px solid rgba(255, 255, 255, 0.189);
+    border: 1px solid c.$glassyGrayBorder;
     transition: border-radius 0.5s;
-  
+
     @media (max-width: 700px) {
       border-radius: 0;
       transition: border-radius 0.5s;
     }
-    //removed theme styles into separate file white-dark-toggle.scss
-    @extend %white-dark-theme-toggle;
-    //
     .countdown {
       display: flex;
       flex-direction: column;
       align-items: center;
       padding-bottom: 10px;
     }
-  
     .round-border {
+      border: 1px c.$white solid;
       margin-top: 30px;
       padding: 20px;
-      border: 1px rgb(255, 255, 255) solid;
-      box-shadow: 0 0 1px 0 rgb(255, 255, 255) inset, 0 0 1px 0 rgb(255, 255, 255);
+      box-shadow: 0 0 1px 0 c.$white inset, 0 0 1px 0 c.$white;
       border-radius: 50%;
-  
+
       .timer-background {
         position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        background-color: #fff;
+        background-color: c.$white;
         height: 235px;
         width: 235px;
         border-radius: 50%;
-
         //svg render
         #container {
           position: absolute;
@@ -129,7 +105,7 @@ body {
         }
 
         .timer {
-          color: black;
+          color: c.$black;
           font-size: 2rem;
           font-weight: 00;
           font-family: f.$countdownFont;
@@ -139,21 +115,21 @@ body {
         }
       }
     }
-  
+
     .icons {
       display: flex;
       margin-bottom: -30px;
+
       button.icon1 {
-        @include c.buttonStyles(-45deg);
+        @include m.buttonStyles(-45deg);
       }
-  
       button.icon2 {
-        @include c.buttonStyles(45deg);
+        @include m.buttonStyles(45deg);
       }
-  
+
       button:hover {
         background-position: right center; /* change the direction of the change here */
-        color: #fff;
+        color: c.$white;
         text-decoration: none;
       }
       %icons {
@@ -165,10 +141,10 @@ body {
           cursor: pointer;
         }
       }
-      .icon1, .icon2 {
+      .icon1,
+      .icon2 {
         @extend %icons;
       }
     }
   }
 }
-

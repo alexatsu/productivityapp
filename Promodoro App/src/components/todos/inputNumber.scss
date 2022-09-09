@@ -1,4 +1,4 @@
-@use "../../components/Todo.scss" as t;
+@use "../todos/Todo.scss" as t;
 .number-input {
 	width: 70px;
     position: relative;
@@ -18,7 +18,7 @@
         content: '';
         position: absolute;
         width: 8px;
-        height: 2px;
+        height: 1px;
         background-color: #46135e;
         top: 40%;
         left: 5px;
@@ -28,7 +28,7 @@
         position: absolute;
         right: 5px;
         width: 8px;
-        height: 2px;
+        height: 1px;
         background-color: #000000;
         top: 40%;
         

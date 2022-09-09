@@ -1,15 +1,18 @@
-@use "../scss/colors.scss" as c;
-@use "../scss/fonts.scss" as f;
-@use "../scss/scss-components/checkbox.scss" as ch;
+@use "../../scss/colors.scss" as c;
+@use "../../scss/fonts.scss" as f;
+@use "../todos/checkbox.scss" as ch;
 
 .todo-section {
-  background-color: rgba(253, 253, 253, 0.185);
+  background-color: c.$glassyGray;
   max-height: 30vh;
   width: 45vh;
   border-radius: 10px;
   padding-top: 30px;
   overflow-x: scroll;
   overflow-x: hidden;
+  backdrop-filter: blur(3.9px);
+  -webkit-backdrop-filter: blur(3.9px);
+  border: 1px solid c.$glassyGrayBorder;
   &::-webkit-scrollbar {
     width: 0px;
     background: transparent; /* make scrollbar transparent */
@@ -28,7 +31,7 @@
     margin-top: -15px;
     //inputs extends/mixin for reusability
     %inputs {
-      background: hsla(284, 100%, 84%, 0.201);
+      background: c.$fadedPurple;
       height: 30px;
       border: 0;
       outline: 0;
@@ -36,7 +39,7 @@
     %input-focus {
       transition: background-color 0.3s;
       &:focus {
-        background: hsla(284, 100%, 84%, 0.728);
+        background: c.$LfadedPurple;
       }
     }
     //inputs-focus extends/mixin for reusability
@@ -62,7 +65,7 @@
       margin-left: 0px;
       transition: background-color 0.3s;
       &:hover {
-        background: hsla(284, 100%, 84%, 0.728);
+        background: c.$LfadedPurple;
       }
     }
   }
@@ -103,10 +106,10 @@
     li {
       background: linear-gradient(
         45deg,
-        hsla(338, 100%, 57%, 0.621),
-        hsla(237, 88%, 32%, 0.537)
+        c.$Dpink,
+        c.$Dblue
       );
-      box-shadow: 0 0 15px 1px rgba(176, 176, 176, 0.573);
+      box-shadow: 0 0 15px 1px c.$Dshadow;
       display: flex;
       align-items: center;
       list-style: none;
@@ -117,7 +120,7 @@
       min-width: 200px;
       position: relative;
       &:hover button {
-        color: rgb(255, 255, 255);
+        color: c.$white;
       }
       //removed styles into separate file checkbox.scss
       @extend %checkbox;
@@ -136,7 +139,7 @@
         transition: color 0.5s;
       }
       &:hover .mins {
-        color: hsla(0, 0%, 100%, 0.916);
+        color: c.$white;
       }
       button {
         position: absolute;
@@ -150,19 +153,22 @@
         cursor: pointer;
         transition: color 0.5s;
         &:hover {
-          color: rgb(255, 34, 86);
+          color: c.$Lpink;
         }
       }
       .text {
+        font-size: 0.85rem;
         background-color: transparent;
         border: transparent;
-        color: hsla(0, 0%, 100%, 0.925);
+        color: c.$white;
         min-width: 235px;
         word-break: break-word;
         resize: none;
         overflow-y: hidden;
         overflow-y: scroll;
         outline: none;
+        display: flex;
+        padding-top: 15px;
         &::-webkit-scrollbar {
           width: 0px;
           background: transparent; /* make scrollbar transparent */
