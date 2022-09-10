@@ -135,7 +135,7 @@ function chevronRotate() {
   <div class="todo-section">
 
     <form class="todo-form" @submit.prevent="addTodo()">
-      <input class="task-holder" v-model="newTodo" placeholder="add..." />
+      <input class="task-holder" v-model="newTodo" />
       <div class="number-input">
         <span :class="[darkIsOn ? dark : light]" class="minus" @click="decrementInputNumber()"></span>
         <input :class="[darkIsOn ? dark : light]" type="number" class="inp-num" min="1" max="60" v-model="newTodoTime">

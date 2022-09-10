@@ -17,11 +17,7 @@
     width: 0px;
     background: transparent; /* make scrollbar transparent */
   }
-  @media (max-width: 700px) {
-    border-radius: 0;
-    transition: border-radius 0.5s;
-  }
-
+ 
   .todo-form {
     margin: auto;
     display: flex;
@@ -49,6 +45,10 @@
       border-radius: 7px;
       padding-left: 10px;
       max-width: 180px;
+      font-family: f.$minsFont;
+      @media (max-height: 600px) {
+      max-width: 45vw;
+      }
     }
 
     .task-number {
@@ -106,6 +106,7 @@
       padding-left: 5px;
       padding-bottom: 5px;
       transition: .2s linear;
+      font-family: f.$minsFont;
       &.light {
         color: black;
       }
@@ -136,6 +137,9 @@
       min-height: 40px;
       min-width: 200px;
       position: relative;
+      @media (max-height: 500px) {
+        min-width: 15vw;
+        }
       &:hover button {
         color: c.$white;
       }
@@ -176,7 +180,6 @@
         font-size: 0.85rem;
         background-color: transparent;
         border: transparent;
-        min-width: 235px;
         word-break: break-word;
         resize: none;
         overflow-y: hidden;
@@ -184,6 +187,12 @@
         outline: none;
         display: flex;
         padding-top: 18px;
+        font-family: f.$minsFont;
+        min-width: 235px;
+        @media (max-height: 500px) {
+          min-width: 15vw;
+          }
+    
         &::-webkit-scrollbar {
           width: 0px;
           background: transparent; /* make scrollbar transparent */

@@ -42,14 +42,14 @@
     @media (max-width: 700px) {
       font-size: 1.4rem;
     }
-    transition: .2s linear;
+    transition: 0.2s linear;
     &.light {
       text-shadow: 0 0 3px c.$Dpurple, 0 0 30px c.$Dpurple, 0 0 1px c.$Dpurple,
-      0 0 1px c.$Dpurple;
+        0 0 1px c.$Dpurple;
     }
     &.dark {
       text-shadow: 0 0 1px c.$Lpastel, 0 0 4px c.$Lpastel, 0 0 1px c.$Lpastel,
-      0 0 1px c.$Lpastel;
+        0 0 1px c.$Lpastel;
       font-weight: 400;
       color: rgb(216, 215, 215);
     }
@@ -69,12 +69,7 @@
     backdrop-filter: blur(3.9px);
     -webkit-backdrop-filter: blur(3.9px);
     border: 1px solid c.$glassyGrayBorder;
-    transition: border-radius 0.5s;
 
-    @media (max-width: 700px) {
-      border-radius: 0;
-      transition: border-radius 0.5s;
-    }
     .countdown {
       display: flex;
       flex-direction: column;
@@ -85,7 +80,7 @@
       margin-top: 30px;
       padding: 10px;
       border-radius: 50%;
-      transition: .2s linear;
+      transition: 0.2s linear;
       &.light {
         border: 1px c.$white solid;
         box-shadow: 0 0 1px 0 c.$white inset, 0 0 1px 0 c.$white;
@@ -103,7 +98,19 @@
         height: 235px;
         width: 235px;
         border-radius: 50%;
-        transition: .2s linear;
+        transition: 0.2s linear;
+        @media (max-height: 600px) {
+          height: 25vh;
+          width: 50vw;
+        }
+        @media (max-height: 570px) {
+          height: 25vh;
+          width: 45vw;
+        }
+        @media (max-height: 510px) {
+          height: 22vh;
+          width: 40vw;
+          }
         &.light {
           background-color: c.$white;
         }
@@ -125,9 +132,12 @@
           font-size: 2rem;
           font-weight: 00;
           font-family: f.$countdownFont;
-          transition: .2s linear;
+          transition: 0.2s linear;
           @media (max-width: 700px) {
             font-size: 1.7rem;
+          }
+          @media (max-height: 600px) {
+            font-size: 1.4rem;
           }
           &.light {
             color: c.$black;
@@ -159,6 +169,12 @@
         color: c.$Lpastel;
         @media (max-width: 700px) {
           font-size: 0.6rem;
+        }
+        @media (max-height: 600px) {
+          font-size: 0.5rem;
+        }
+        @media (max-height: 510px) {
+          font-size: 0.4rem;
         }
         &:hover {
           cursor: pointer;

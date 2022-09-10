@@ -1,8 +1,12 @@
 @use "../todos/Todo.scss" as t;
+@use "../../scss/fonts.scss" as f;
 .number-input {
   width: 70px;
   position: relative;
   display: flex;
+  @media (max-height: 600px) {
+    max-width: 15vw;
+    }
   span {
     display: block;
     float: left;
@@ -21,6 +25,9 @@
     top: 40%;
     left: 5px;
     transition: background-color .2s;
+    @media (max-height: 600px) {
+      width: 5px;
+      }
   }
   .minus.light:before {
     @extend %minus-reuse;
@@ -40,6 +47,10 @@
     padding: 0;
     background: hsla(284, 100%, 84%, 0.201);
     transition: color .2s;
+    font-family: f.$minsFont;
+    @media (max-height: 600px) {
+      max-width: 7vw;
+      }
     //imported extends from todo.scss
     @extend %inputs;
     @extend %input-focus;
@@ -69,6 +80,9 @@
       height: 1px;
       top: 40%;
       transition: background-color .2s;
+      @media (max-height: 600px) {
+        width: 5px;
+        }
   }
   .plus.light:before,
   .plus.light:after {

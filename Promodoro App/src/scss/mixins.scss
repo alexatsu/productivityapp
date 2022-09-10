@@ -19,6 +19,10 @@
   @media (max-width: 700px) {
     min-width: 30px;
   }
+  @media (max-height: 510px) {
+    min-width: 25px;
+    margin: 5px
+  }
 }
 
 %background {
