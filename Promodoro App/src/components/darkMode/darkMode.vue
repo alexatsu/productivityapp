@@ -12,7 +12,6 @@ const { darkIsOn, darkMode } = useDarkMode();
             <span></span>
         </div>
     </div>
-    <p :class="{dark: darkIsOn}" class="text">Lol</p>
 </template>
 
 <style lang="scss">

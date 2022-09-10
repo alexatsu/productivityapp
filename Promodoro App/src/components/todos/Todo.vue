@@ -3,8 +3,8 @@ import { ref, onMounted, watch } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { nanoid } from 'nanoid';
 import moment from 'moment'
-
-
+import { useDarkMode } from '../../hooks/useDarkMode'
+const { dark, light, darkIsOn } = useDarkMode();
 let chevron = ref(true);
 const newTodo = ref('');
 const newTodoTime = ref(1);
@@ -137,13 +137,13 @@ function chevronRotate() {
     <form class="todo-form" @submit.prevent="addTodo()">
       <input class="task-holder" v-model="newTodo" placeholder="add..." />
       <div class="number-input">
-        <span class="minus" @click="decrementInputNumber()"></span>
-        <input type="number" class="inp-num" min="1" max="60" v-model="newTodoTime">
-        <span class="plus" @click="incrementInputNumber()"></span>
+        <span :class="[darkIsOn ? dark : light]" class="minus" @click="decrementInputNumber()"></span>
+        <input :class="[darkIsOn ? dark : light]" type="number" class="inp-num" min="1" max="60" v-model="newTodoTime">
+        <span :class="[darkIsOn ? dark : light]" class="plus" @click="incrementInputNumber()"></span>
       </div>
       <button class="task-btn">
         <span class="chevron">
-          <font-awesome-icon icon="fa-solid fa-chevron-down" style="color: black;" />
+          <font-awesome-icon icon="fa-solid fa-chevron-down" class="icon" :class="[darkIsOn ? dark : light]" />
         </span>
       </button>
     </form>
@@ -157,7 +157,7 @@ function chevronRotate() {
             </span>
           </label>
         </div>
-        <textarea class="text" v-model="todo.text" rows="2"></textarea>
+        <textarea :class="[darkIsOn ? dark : light]" class="text" v-model="todo.text" rows="2"></textarea>
         <span class="mins">
           {{ moment(todo.deadline - todo.startTime).format("mm") }}m
         </span>
@@ -166,11 +166,11 @@ function chevronRotate() {
     </ul>
 
     <div class="divider-between-lists">
-      <span class="chevron">
-        <font-awesome-icon icon="fa-solid fa-chevron-down" style="color: black;" @click="chevronRotate()"
-          :class="{ rotated: chevron }" class="chevron-rotated" />
+      <span class="chevron2">
+        <font-awesome-icon icon="fa-solid fa-chevron-down" @click="chevronRotate()"
+          :class="{ rotated: chevron }, [darkIsOn ? dark : light]" class="icon-rotated" />
       </span>
-      <span class="completed">Completed</span>
+      <span :class="[darkIsOn ? dark : light]" class="completed">Completed</span>
     </div>
 
     <ul v-if="!chevron" class="completed-todos">
@@ -182,7 +182,7 @@ function chevronRotate() {
             </span>
           </label>
         </div>
-        <textarea class="text" v-model="todo.text" rows="2"></textarea>
+        <textarea :class="[darkIsOn ? dark : light]" class="text" v-model="todo.text" rows="2"></textarea>
         <span class="mins">
           {{ moment(todo.deadline - todo.startTime).format("mm") }}m
         </span>

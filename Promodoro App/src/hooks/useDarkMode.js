@@ -1,5 +1,8 @@
 import { ref } from "vue";
 
+const dark = ref('dark');//variables to switch between them
+const light = ref('light');
+
 let darkIsOn = ref(false); // set it global and use anywhere 
 
 export function useDarkMode() {
@@ -11,9 +14,11 @@ export function useDarkMode() {
   return {
     darkIsOn,
     darkMode,
+    dark,
+    light
   };
 }
-// :class="{dark: darkIsOn}" assing to a element (any div)
-// (dark - class, dakIsOn - variable)
+// :class="[darkIsOn ? dark : light]" assining to a element (any div)
+// (dark/light - class, dakIsOn - variable)
 
 // @click="darkMode()" attaching to a listener

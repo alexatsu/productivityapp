@@ -67,6 +67,15 @@
       &:hover {
         background: c.$LfadedPurple;
       }
+      .icon {
+        transition: color 0.2s;
+        &.light {
+          color: rgb(0, 0, 0);
+        }
+        &.dark {
+          color: rgb(216, 215, 215);
+        }
+      }
     }
   }
 
@@ -74,16 +83,21 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    .chevron {
+    .chevron2 {
       padding-left: 10px;
       font-size: 0.8rem;
-      transition: transform 0.2s linear;
       .rotated {
         transition: transform 0.3s linear;
         transform: rotate(-90deg);
       }
-      .chevron-rotated {
-        transition: transform 0.2s linear;
+      .icon-rotated {
+        transition: transform 0.2s linear, color 0.2s;
+        &.light {
+          color: rgb(0, 0, 0);
+        }
+        &.dark {
+          color: rgb(216, 215, 215);
+        }
       }
     }
     .completed {
@@ -91,6 +105,13 @@
       justify-content: flex-start;
       padding-left: 5px;
       padding-bottom: 5px;
+      transition: .2s linear;
+      &.light {
+        color: black;
+      }
+      &.dark {
+        color: rgb(216, 215, 215);
+      }
     }
   }
 
@@ -104,11 +125,7 @@
     margin: auto;
 
     li {
-      background: linear-gradient(
-        45deg,
-        c.$Dpink,
-        c.$Dblue
-      );
+      background: linear-gradient(45deg, c.$Dpink, c.$Dblue);
       box-shadow: 0 0 15px 1px c.$Dshadow;
       display: flex;
       align-items: center;
@@ -126,7 +143,6 @@
       @extend %checkbox;
       //
       label {
-        margin-left: -5px;
         margin-right: -5px;
       }
       .mins {
@@ -160,7 +176,6 @@
         font-size: 0.85rem;
         background-color: transparent;
         border: transparent;
-        color: c.$white;
         min-width: 235px;
         word-break: break-word;
         resize: none;
@@ -168,13 +183,19 @@
         overflow-y: scroll;
         outline: none;
         display: flex;
-        padding-top: 15px;
+        padding-top: 18px;
         &::-webkit-scrollbar {
           width: 0px;
           background: transparent; /* make scrollbar transparent */
         }
         &:focus {
           border: transparent;
+        }
+        &.light {
+          color: c.$white;
+        }
+        &.dark {
+          color: rgb(216, 215, 215);
         }
       }
     }

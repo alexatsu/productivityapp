@@ -1,7 +1,6 @@
 <script setup>
 import Todo from './components/todos/Todo.vue';
 import DarkMode from './components/darkMode/darkMode.vue';
-import Footer from './components/footer/footer.vue';
 
 // import Todo2 from './components/Todo2.vue';
 import { ref, computed } from 'vue';
@@ -33,7 +32,8 @@ const { progressBarStart,
   progressBarUpdate,
   container,
 } = useProgressBar();
-const { darkIsOn, darkMode } = useDarkMode();
+
+const { dark, light, darkIsOn } = useDarkMode();
 
 let timerRunning;
 let btnToggle = ref(true);
@@ -42,6 +42,7 @@ let btnToggle = ref(true);
 const seconds = ref(0);
 const display = ref("00 : 00")
 let resetMinsTodo = ref(0);
+
 
 const playButtonIcon = computed(() => {
   return btnToggle.value ? 'fa-play fa-solid' : 'fa-pause fa-solid'
@@ -99,18 +100,18 @@ function todoTimeEvent(secs) {
 
 <template>
 
-  <body class="background" :class="{dark: darkIsOn}" >
+  <body class="background" :class="[darkIsOn ? dark : light]" >
     <header class="nav">
-      <span class="header">Productivity App</span>
+      <span class="header" :class="[darkIsOn ? dark : light]" >Productivity App</span>
     </header>
     <div class="app">
       <main class="main-app">
         <DarkMode></DarkMode>
         <div class="countdown">
-          <div class="round-border" :class="{dark: darkIsOn}">
-            <div class="timer-background">
+          <div class="round-border" :class="[darkIsOn ? dark : light]">
+            <div class="timer-background" :class="[darkIsOn ? dark : light]">
               <div ref="container" id="container"></div> <!-- ref is like creating an id (getelemenbyID) -->
-              <span class="timer">{{ display }}</span>
+              <span class="timer" :class="[darkIsOn ? dark : light]">{{ display }}</span>
               <div class="icons">
                 <button class="icon1" @click="countdownStart()">
                   <font-awesome-icon :icon="playButtonIcon" size='2x' />
@@ -129,7 +130,6 @@ function todoTimeEvent(secs) {
       </Todo>
       <!-- <Todo @counter-update="increment"  
       :counter="i" /> -->
-      <Footer></Footer>
     </div>
   </body>
 </template>
