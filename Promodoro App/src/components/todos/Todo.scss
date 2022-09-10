@@ -45,10 +45,14 @@
       border-radius: 7px;
       padding-left: 10px;
       max-width: 180px;
+      margin-left: 5px;
       font-family: f.$minsFont;
       @media (max-height: 600px) {
       max-width: 45vw;
       }
+      @media (max-height: 570px) {
+        min-width: 20vw;
+        }
     }
 
     .task-number {
