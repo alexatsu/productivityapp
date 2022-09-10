@@ -8,29 +8,25 @@
 }
 
 .background {
-  background-image: linear-gradient(
-    -45deg,
-    c.$Lgrayish-blue,
-    c.$Lblue,
-    c.$Lpurple,
-    c.$Lpink
-  );
   @extend %background; //mixins.scss
-}
-.background.dark {
-  background-image: linear-gradient(
-    -45deg,
-    hsla(199, 57%, 26%, 0.534),
-    hsl(230, 45%, 31%),
-    hsl(284, 45%, 28%),
-    hsl(338, 63%, 29%)
-  );
-  @extend %background; //mixins.scss
-}
-.dark.round-border {
-  margin-top: 300px;
-  padding: 20px;
-  border-radius: 50%;
+  &.light {
+    background-image: linear-gradient(
+      -45deg,
+      c.$Lgrayish-blue,
+      c.$Lblue,
+      c.$Lpurple,
+      c.$Lpink
+    );
+  }
+  &.dark {
+    background-image: linear-gradient(
+      -45deg,
+      hsla(199, 57%, 26%, 0.534),
+      hsl(230, 45%, 31%),
+      hsl(284, 45%, 28%),
+      hsl(338, 63%, 29%)
+    );
+  }
 }
 
 .nav {
@@ -43,10 +39,19 @@
     font-family: f.$primaryFont;
     font-weight: 600;
     color: c.$Lpastel;
-    text-shadow: 0 0 3px c.$Dpurple, 0 0 30px c.$Dpurple, 0 0 1px c.$Dpurple,
-      0 0 1px c.$Dpurple;
     @media (max-width: 700px) {
       font-size: 1.4rem;
+    }
+    transition: .2s linear;
+    &.light {
+      text-shadow: 0 0 3px c.$Dpurple, 0 0 30px c.$Dpurple, 0 0 1px c.$Dpurple,
+      0 0 1px c.$Dpurple;
+    }
+    &.dark {
+      text-shadow: 0 0 1px c.$Lpastel, 0 0 4px c.$Lpastel, 0 0 1px c.$Lpastel,
+      0 0 1px c.$Lpastel;
+      font-weight: 400;
+      color: rgb(216, 215, 215);
     }
   }
 }
@@ -77,22 +82,34 @@
       padding-bottom: 10px;
     }
     .round-border {
-      border: 1px c.$white solid;
       margin-top: 30px;
-      padding: 20px;
-      box-shadow: 0 0 1px 0 c.$white inset, 0 0 1px 0 c.$white;
+      padding: 10px;
       border-radius: 50%;
-
+      transition: .2s linear;
+      &.light {
+        border: 1px c.$white solid;
+        box-shadow: 0 0 1px 0 c.$white inset, 0 0 1px 0 c.$white;
+      }
+      &.dark {
+        border: 1px c.$black solid;
+        box-shadow: 0 0 1px 0 c.$black inset, 0 0 1px 0 c.$black;
+      }
       .timer-background {
         position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        background-color: c.$white;
         height: 235px;
         width: 235px;
         border-radius: 50%;
+        transition: .2s linear;
+        &.light {
+          background-color: c.$white;
+        }
+        &.dark {
+          background-color: c.$black;
+        }
         //svg render
         #container {
           position: absolute;
@@ -105,12 +122,18 @@
         }
 
         .timer {
-          color: c.$black;
           font-size: 2rem;
           font-weight: 00;
           font-family: f.$countdownFont;
+          transition: .2s linear;
           @media (max-width: 700px) {
             font-size: 1.7rem;
+          }
+          &.light {
+            color: c.$black;
+          }
+          &.dark {
+            color: rgb(216, 215, 215);
           }
         }
       }
